@@ -41,7 +41,13 @@ Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu r
  ```sh default
  git clone https://github.com/rhswire/theoriginals-academy-postman.git
  ```
- 
+
+### **Verificando se tem alterações no repositório Git e baixar para o repositório local**
+
+ ```sh default
+ git pull
+ ```
+
 ### **Transferindo arquivos do repositório local para o repositório Git** 
 
 Dentro do repositório local, abra o Git Bash e digite:

@@ -36,6 +36,10 @@ Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu r
  <p align="center">
   <img src="./.images/verifica_chave_ssh.png" alt="verifica chaves SSH existentes" width="45%" />
 
+### **Para clonar o repositório fazer:**
+
+git clone https://github.com/rhswire/theoriginals-academy-postman
+
 ### **Transferindo arquivos do repositório local para o repositório Git** 
 
 Dentro do repositório local, abra o Git Bash e digite:

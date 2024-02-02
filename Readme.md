@@ -40,23 +40,24 @@ Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu r
 
 Dentro do repositório local, abra o Git Bash e digite:
 
+ 1. Adicionar todos os ficheiros alterados
  ```sh default
  git add .
  ```
-
+ 2. Colocar na zona de "preparação do computador"
  ```sh default
- git commit -m "nome do que está sendo incluído ou alterado"
+ git commit -m "nome ou descrição da inclusão ou alteração"
  ```
-
+ 3. Criar nome para as versões
  ```sh default
  git tag -a vx.x -m "version x.x"
  ```
-
+ 4. Para carregar as alterações no Git
  ```sh default
  git push origin main
  ```
 
-<p align="center">
+ <p align="center">
   <img src="./.images/transferindo_alteracoes.png" alt="verifica chaves SSH existentes" width="60%" />
 
 ## Projeto Desenvolvido por: 

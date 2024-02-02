@@ -15,3 +15,4 @@ Projeto de automação com Postman.
 
 ## Projeto Desenvolvido por: 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93127535" width=90><br/><sub>Raquel Swire Guimarães</sub>](https://github.com/rhswire)<br/>[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rhswire)](https://www.linkedin.com/in/rhswire) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/92730333?v=4" width=90><br/><sub>Rebeca Swire</sub>](https://github.com/BekaSwire)<br/>[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rebeca-swire/)](https://www.linkedin.com/in/rebeca-swire/) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | 

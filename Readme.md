@@ -40,7 +40,7 @@ Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu r
 
 Dentro do repositório local, abra o Git Bash e digite:
 
-```sh default
+ ```sh default
  git add .
  ```
 
@@ -48,11 +48,11 @@ Dentro do repositório local, abra o Git Bash e digite:
  git commit -m "nome do que está sendo incluído ou alterado"
  ```
 
-  ```sh default
+ ```sh default
  git tag -a vx.x -m "version x.x"
  ```
 
-  ```sh default
+ ```sh default
  git push origin main
  ```
 

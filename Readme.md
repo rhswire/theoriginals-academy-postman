@@ -36,7 +36,7 @@ Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu r
  <p align="center">
   <img src="./.images/verifica_chave_ssh.png" alt="verifica chaves SSH existentes" width="45%" />
 
-### **Para clonar o repositório**
+### **Para clonar o repositório do Git**
 
  ```sh default
  git clone https://github.com/rhswire/theoriginals-academy-postman.git

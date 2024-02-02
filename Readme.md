@@ -20,12 +20,14 @@ Projeto de automação com Postman.
 
 No Git e GitHub, realize as seguintes etapas:
 
-1. Instale e Configure uma conta no Git. Para saber mais, [acesse o Git](https://git-scm.com/download/win).
+### **Instalar e Configura uma conta no Git** 
 
-2. Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu repositório local com o repositório remoto. Para saber mais, [acesse o conteúdo do GitHub](https://docs.github.com/pt/authentication/connecting-to-github-with-ssh)
+Instale e Configure uma conta no Git. Para saber mais, [acesse o Git](https://git-scm.com/download/win).
 
 ### **Verificando se existe a Chave SSH** 
  
+Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu repositório local com o repositório remoto. Para saber mais, [acesse o conteúdo do GitHub](https://docs.github.com/pt/authentication/connecting-to-github-with-ssh).
+
  Abra o Git Bash e digite:
 
  ```sh default
@@ -34,7 +36,9 @@ No Git e GitHub, realize as seguintes etapas:
  <p align="center">
   <img src="./.images/verifica_chave_ssh.png" alt="verifica chaves SSH existentes" width="45%" />
 
-3. Transferindo as alterações efetuadas no repositório local para o repositório Git.
+### **Transferindo arquivos do repositório local para o repositório Git** 
+
+Transferindo as alterações efetuadas:
 
 Dentro do repositório local, abra o Git Bash e digite:
 

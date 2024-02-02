@@ -24,22 +24,10 @@ No Git e GitHub, realize as seguintes etapas:
 
 Instale e Configure uma conta no Git. Para saber mais, [acesse o Git](https://git-scm.com/download/win).
 
-### **Verificando se existe a Chave SSH** 
- 
-Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu repositório local com o repositório remoto. Para saber mais, [acesse o conteúdo do GitHub](https://docs.github.com/pt/authentication/connecting-to-github-with-ssh).
-
- Abra o Git Bash e digite:
-
- ```sh default
- ls -al ~/.ssh
- ```
- <p align="center">
-  <img src="./.images/verifica_chave_ssh.png" alt="verifica chaves SSH existentes" width="45%" />
-
 ### **Para clonar o repositório do Git**
 
  ```sh default
- git clone https://github.com/rhswire/theoriginals-academy-postman.git
+ git clone git@github.com:rhswire/theoriginals-academy-postman.git
  ```
 
 ### **Verificando se tem alterações no repositório Git e baixar para o repositório local**

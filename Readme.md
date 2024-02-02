@@ -1,3 +1,6 @@
+# The Originals Automation Postman
+
+
 ### Projeto de automação com Postman e Report com Newman
 
 Projeto de automação com Postman.
@@ -12,6 +15,27 @@ Projeto de automação com Postman.
 ```bash
     newman run signup.json -e env-automacao.json -g env-global.json
 ```
+
+### **Git e GitHub**
+
+No Git e GitHub, realize as seguintes etapas:
+
+1. Instale e Configure uma conta no Git. Para saber mais, [acesse o Git](https://git-scm.com/download/win).
+
+2. Verifique se tem uma Chave SSH cadastrada, para que você possa conectar o seu repositório local com o repositório remoto. Para saber mais, [acesse o conteúdo do GitHub](https://docs.github.com/pt/authentication/connecting-to-github-with-ssh)
+
+### **Verificando se existe a Chave SSH** 
+ 
+ Abre o Git Bash e digit:
+
+ ```sh default
+ ls -al ~/.ssh
+ ```
+ <p align="center">
+  <img src="./.images/verifica_chave_ssh.png" alt="verifica chaves SSH existentes" width="45%" />
+
+3.
+
 
 ## Projeto Desenvolvido por: 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/137322187?v=4" width=90><br/><sub>Danielle Sousa</sub>](https://github.com/rhswire)<br/>[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/daniellesousadads/)](https://www.linkedin.com/in/daniellesousadads/) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/93127535" width=90><br/><sub>Raquel Swire Guimarães</sub>](https://github.com/rhswire)<br/>[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rhswire)](https://www.linkedin.com/in/rhswire) | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/92730333?v=4" width=90><br/><sub>Rebeca Swire</sub>](https://github.com/BekaSwire)<br/>[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rebeca-swire/)](https://www.linkedin.com/in/rebeca-swire/) |

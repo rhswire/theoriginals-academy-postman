@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+#!/usr/bin/bash env bash
+name: The Originals
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Step 1 Check version Newman and Node
+        run: |
+              newman --version
+              node --version
+      # Runs a set of commands using the runners shell
+      - name: Step 2 Install Newman-Reporter-Htlmextra
+        run: sudo npm install -g newman-reporter-htmlextra
+        
+        # Runs a set of commands using the runners shell
+     - name: Step 3 Execute Register Collection
+        run: newman run ./register-rr.json -e ./env-automacao-rr.json --delay-request 1 --reporters cli,htmlextra --reporter-htmlextra-export ./result/RegisterReport.html
+
+      - name: Step 4 Execute Board Collection
+        run: newman run ./board-rr.json -e ./env-automacao-rr.json --delay-request 1 --reporters cli,htmlextra --reporter-htmlextra-export ./result/BoardReport.html
+
+      - name: Step 5 Execute Corporate Collection
+        run: newman run ./corporate-rr.json -e ./env-automacao-rr.json --delay-request 1 --reporters cli,htmlextra --reporter-htmlextra-export ./result/CorporateReport.html
+
+      - name: Step 6 Execute Department Collection
+        run: newman run ./department-rr.json -e ./env-automacao-rr.json --delay-request 1 --reporters cli,htmlextra --reporter-htmlextra-export ./result/DepartmentReport.html
+     
+        # Runs a set of commands using the runners shell
+      - name: Step 7 Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+              name: report
+              ./result/RegisterReport.html
+              ./result/BoardReport.html
+              ./result/CorporateReport.html
+              ./result/DepartmentReport.html

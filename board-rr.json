@@ -1,0 +1,1160 @@
+{
+	"info": {
+		"_postman_id": "396077f1-80b5-45b0-a1bf-b26855c2c478",
+		"name": "Board",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27688809",
+		"_collection_link": "https://lively-comet-905188.postman.co/workspace/The-Originals~84b237fe-737d-4f44-bcb8-196c1c02072d/collection/27688809-396077f1-80b5-45b0-a1bf-b26855c2c478?action=share&source=collection_link&creator=27688809"
+	},
+	"item": [
+		{
+			"name": "Login ADMIN",
+			"item": [
+				{
+					"name": "Login ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Novo ADMIN",
+			"item": [
+				{
+					"name": "Novo Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function gerarCPF() {\r",
+									"    let num = Math.floor(Math.random() * 999999999);\r",
+									"    let cpf = num.toString().padStart(9, '0');\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"\r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"function calcularDigito(cpf) {\r",
+									"    let soma = 0;\r",
+									"    for (let i = 0; i < cpf.length; i++) {\r",
+									"        soma += parseInt(cpf[i]) * ((cpf.length + 1) - i);\r",
+									"    }\r",
+									"    let resto = (soma * 10) % 11;\r",
+									"    return (resto > 9) ? '0' : resto.toString();\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"cpf\", gerarCPF());\r",
+									"\r",
+									"function generateRandomPassword() {\r",
+									"  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"  const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+									"  const numbers = '0123456789';\r",
+									"  const allChars = uppercaseChars + lowercaseChars + specialChars + numbers;\r",
+									"\r",
+									"  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];\r",
+									"\r",
+									"  const passwordLength = Math.floor(Math.random() * 5) + 8; // Entre 8 e 12 dígitos\r",
+									"\r",
+									"  const password = [\r",
+									"    getRandomChar(uppercaseChars),\r",
+									"    getRandomChar(lowercaseChars),\r",
+									"    getRandomChar(specialChars),\r",
+									"    getRandomChar(numbers),\r",
+									"    ...Array.from({ length: passwordLength - 4 }, () => getRandomChar(allChars))\r",
+									"  ].sort(() => Math.random() - 0.5).join('');\r",
+									"\r",
+									"  pm.environment.set('password', password);\r",
+									"}\r",
+									"\r",
+									"generateRandomPassword();\r",
+									"\r",
+									"\r",
+									"function generateFullName() {\r",
+									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
+									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"\r",
+									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
+									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
+									"\r",
+									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
+									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"\r",
+									"  pm.environment.set('fullName', fullName);\r",
+									"  pm.environment.set('mailRegister', email);\r",
+									"}\r",
+									"generateFullName();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"mail\": \"{{mailRegister}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{mailRegister}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incluir Diretoria",
+			"item": [
+				{
+					"name": "Novo cadastro Diretoria (Happy Path)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verifica se 'boardCode' está presente no corpo da resposta\", function () {\r",
+									"    var responseBody = pm.response.text();\r",
+									"    pm.expect(responseBody).to.include('\"boardCode\"');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateBoardName() {\r",
+									"  const boardNames = [\r",
+									"    \"Distribuição\",\r",
+									"    \"Negócios\",\r",
+									"    \"Entregas\",\r",
+									"    \"Marketing\",\r",
+									"    \"Finanças\",\r",
+									"    \"Tecnologia\",\r",
+									"    \"Recursos Humanos\",\r",
+									"    \"Vendas\",\r",
+									"    \"Operações\",\r",
+									"    \"Desenvolvimento\",\r",
+									"    \"Logística\",\r",
+									"    \"Jurídico\",\r",
+									"    \"Qualidade\",\r",
+									"    \"Compras\",\r",
+									"    \"Relações Públicas\",\r",
+									"    \"Inovação\",\r",
+									"    \"Estratégia\",\r",
+									"    \"Compliance\",\r",
+									"    \"Projetos\",\r",
+									"    \"Clientes\",\r",
+									"    \"Suporte\",\r",
+									"    \"Engenharia\",\r",
+									"    \"Comunicação\",\r",
+									"    \"Produção\",\r",
+									"    \"Pesquisa e Desenvolvimento\",\r",
+									"    \"Design\",\r",
+									"    \"Sustentabilidade\",\r",
+									"    \"Assuntos Corporativos\",\r",
+									"    \"Gestão de Produtos\",\r",
+									"    \"Administração\",\r",
+									"    \"Assuntos Governamentais\",\r",
+									"    \"Assuntos Internacionais\",\r",
+									"    \"Educação Corporativa\",\r",
+									"    \"TI\",\r",
+									"    \"Segurança\",\r",
+									"    \"Planejamento\",\r",
+									"    \"Relações com Investidores\",\r",
+									"    \"Assuntos Ambientais\",\r",
+									"    \"Saúde e Segurança no Trabalho\",\r",
+									"    \"Contabilidade\",\r",
+									"    \"Controle de Qualidade\",\r",
+									"    \"Gerenciamento de Projetos\",\r",
+									"    \"Treinamento e Desenvolvimento\",\r",
+									"    \"Marketing Digital\",\r",
+									"    \"Inovação e Tecnologia\",\r",
+									"    \"Expansão de Mercado\",\r",
+									"    \"Comunicação Interna\",\r",
+									"    \"Comunicação Externa\",\r",
+									"    \"Gestão de Crises\",\r",
+									"    \"Estratégias de Vendas\",\r",
+									"    \"Desenvolvimento de Produto\",\r",
+									"    \"Gestão de Fornecedores\",\r",
+									"    \"Desenvolvimento de Mercado\",\r",
+									"    \"Assuntos Regulatórios\",\r",
+									"    \"Aquisições e Fusões\",\r",
+									"    \"Gestão de Riscos\",\r",
+									"    \"Relações Estratégicas\",\r",
+									"    \"Parcerias de Negócios\",\r",
+									"    \"Assuntos de TI\",\r",
+									"    \"Desenvolvimento de Marca\",\r",
+									"    \"Planejamento Estratégico\",\r",
+									"    \"Operações Financeiras\",\r",
+									"    \"Relações de Consumidores\",\r",
+									"    \"Gestão de Ativos\",\r",
+									"    \"Estratégias de Expansão\",\r",
+									"    \"Gestão de Portfólio\",\r",
+									"    \"Assuntos de Sustentabilidade\",\r",
+									"    \"Marketing de Conteúdo\",\r",
+									"    \"Gestão de Talentos\",\r",
+									"    \"Gestão de Projetos de TI\",\r",
+									"    \"Assuntos de Ética\",\r",
+									"    \"Gestão de Instalações\",\r",
+									"    \"Gestão de Dados\",\r",
+									"    \"Gestão de Qualidade Total\",\r",
+									"    \"Gestão de Eventos\",\r",
+									"    \"Estratégias de Exportação\",\r",
+									"    \"Gestão de Redes Sociais\",\r",
+									"    \"Assuntos de Privacidade\",\r",
+									"    \"Inovação em Produto\",\r",
+									"    \"Assuntos de Segurança Cibernética\",\r",
+									"    \"Gestão de Operações Globais\",\r",
+									"    \"Gestão de Reciclagem\",\r",
+									"    \"Estratégias de Mercado Emergente\",\r",
+									"    \"Gestão de Investimentos\",\r",
+									"    \"Assuntos de Cidadania Corporativa\",\r",
+									"    \"Estratégias de E-commerce\",\r",
+									"    \"Gestão de Resíduos\",\r",
+									"    \"Gestão de Propriedade Intelectual\",\r",
+									"    \"Assuntos de Propaganda\",\r",
+									"    \"Gestão de Estratégia de Marca\",\r",
+									"    \"Estratégias de Comércio Internacional\",\r",
+									"    \"Gestão de Marketing de Produto\",\r",
+									"    \"Assuntos de Satisfação do Cliente\",\r",
+									"    \"Estratégias de Inovação de Processos\",\r",
+									"    \"Gestão de Transporte\",\r",
+									"    \"Gestão de Mídia\",\r",
+									"    \"Estratégias de Publicidade\",\r",
+									"    \"Assuntos de Diversidade e Inclusão\",\r",
+									"    \"Estratégias de Eficácia de Vendas\",\r",
+									"    \"Gestão de Conformidade Regulatória\",\r",
+									"    \"Assuntos de Energia Sustentável\",\r",
+									"    \"Gestão de Cadeia de Suprimentos\",\r",
+									"    \"Estratégias de Desenvolvimento de Produto\",\r",
+									"    \"Gestão de Qualidade de Produto\",\r",
+									"    \"Assuntos de Responsabilidade Social Corporativa\",\r",
+									"    \"Gestão de Inovação de Produtos\",\r",
+									"    \"Estratégias de Marketing de Conteúdo\",\r",
+									"    \"Gestão de Comunicação Interna\",\r",
+									"  ];\r",
+									"\r",
+									"  const randomBoardName = boardNames[Math.floor(Math.random() * boardNames.length)];\r",
+									"\r",
+									"  pm.environment.set('boardName', randomBoardName);\r",
+									"}\r",
+									"\r",
+									"generateBoardName();\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boardName\": \"{{boardName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” vazio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \" \"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” com 51 caracteres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"AbCdeFgHiJklMnOpQrStUvWxYz&AbCdeFgHiJklMnOpQrStUvW&\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” repetido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"{{boardName}}\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” com números, letras e o caractere especial &",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"123456789Tentei&NaoConsegui\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” somente com números",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"123456789\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” com letras e outros caracteres especiais sem ser o &",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"123456789Sabor@Suave\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo “boardName” com espaço",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateBoardName() {\r",
+									"  const boardNames = [\r",
+									"    \"Marketing Digital\",\r",
+									"    \"Gestão Estratégica\",\r",
+									"    \"Desenvolvimento Web\",\r",
+									"    \"Recursos Humanos\",\r",
+									"    \"Compras Corporativas\",\r",
+									"    \"Operações Financeiras\",\r",
+									"    \"Gestão de Projetos\",\r",
+									"    \"Engenharia de Software\",\r",
+									"    \"Logística Integrada\",\r",
+									"    \"Estratégias de Vendas\",\r",
+									"    \"Design Gráfico\",\r",
+									"    \"Gestão de Recursos\",\r",
+									"    \"Comunicação Interna\",\r",
+									"    \"Assuntos Regulatórios\",\r",
+									"    \"Contabilidade Financeira\",\r",
+									"    \"Assuntos Corporativos\",\r",
+									"    \"Desenvolvimento de Produto\",\r",
+									"    \"Estratégias de Mercado\",\r",
+									"    \"Marketing de Conteúdo\",\r",
+									"    \"Gestão de Talentos\",\r",
+									"    \"Planejamento Estratégico\",\r",
+									"    \"Controle de Qualidade\",\r",
+									"    \"Assuntos de Ética\",\r",
+									"    \"Gestão de Dados\",\r",
+									"    \"Estratégias de Exportação\",\r",
+									"    \"Gestão de Redes Sociais\",\r",
+									"    \"Assuntos de Privacidade\",\r",
+									"    \"Inovação em Produto\",\r",
+									"    \"Assuntos de Segurança\",\r",
+									"    \"Gestão de Reciclagem\",\r",
+									"    \"Estratégias de Mercado\",\r",
+									"    \"Gestão de Investimentos\",\r",
+									"    \"Assuntos de Cidadania\",\r",
+									"    \"Estratégias de E-commerce\",\r",
+									"    \"Gestão de Resíduos\",\r",
+									"    \"Gestão de Propriedade\",\r",
+									"    \"Assuntos de Propaganda\",\r",
+									"    \"Gestão de Estratégia\",\r",
+									"    \"Estratégias de Comércio\",\r",
+									"    \"Gestão de Marketing\",\r",
+									"    \"Assuntos de Satisfação\",\r",
+									"    \"Estratégias de Inovação\",\r",
+									"    \"Gestão de Transporte\",\r",
+									"    \"Gestão de Mídia\",\r",
+									"    \"Estratégias de Publicidade\",\r",
+									"    \"Assuntos de Diversidade\",\r",
+									"    \"Estratégias de Eficácia\",\r",
+									"    \"Gestão de Conformidade\",\r",
+									"    \"Assuntos de Energia\",\r",
+									"    \"Gestão de Cadeia\",\r",
+									"    \"Estratégias de Desenvolvimento\",\r",
+									"    \"Gestão de Qualidade\",\r",
+									"    \"Assuntos de Responsabilidade\",\r",
+									"    \"Gestão de Inovação\",\r",
+									"    \"Estratégias de Conteúdo\",\r",
+									"    \"Gestão de Comunicação\",\r",
+									"    \"Desenvolvimento de Negócios\",\r",
+									"    \"Gestão de Operações\",\r",
+									"    \"Estratégias de TI\",\r",
+									"    \"Gestão de Sustentabilidade\",\r",
+									"    \"Assuntos de RH\",\r",
+									"    \"Gestão de Compras\",\r",
+									"    \"Estratégias de Logística\",\r",
+									"    \"Gestão de TI\",\r",
+									"    \"Estratégias de Qualidade\",\r",
+									"    \"Assuntos de TI\",\r",
+									"    \"Gestão de Marca\",\r",
+									"    \"Gestão de Segurança\",\r",
+									"    \"Assuntos de Marketing\",\r",
+									"    \"Estratégias de RH\",\r",
+									"    \"Gestão de Clientes\",\r",
+									"    \"Assuntos de Finanças\",\r",
+									"    \"Gestão de RH\",\r",
+									"    \"Estratégias de Desenvolvimento\",\r",
+									"    \"Assuntos de Logística\",\r",
+									"    \"Gestão de Estratégia\",\r",
+									"    \"Estratégias de Compras\",\r",
+									"    \"Gestão de Produção\",\r",
+									"    \"Assuntos de Produção\",\r",
+									"    \"Gestão de Finanças\",\r",
+									"    \"Estratégias de Gestão\",\r",
+									"    \"Gestão de Comércio\",\r",
+									"    \"Assuntos de Comunicação\",\r",
+									"    \"Estratégias de Produção\",\r",
+									"    \"Gestão de Negócios\",\r",
+									"    \"Assuntos de Negócios\",\r",
+									"    \"Estratégias de Negócios\",\r",
+									"    \"Gestão de Operações\",\r",
+									"    \"Assuntos de Operações\",\r",
+									"    \"Gestão de Desenvolvimento\",\r",
+									"    \"Estratégias de Desenvolvimento\",\r",
+									"    \"Gestão de Estratégias\",\r",
+									"    \"Assuntos de Estratégia\",\r",
+									"    \"Gestão de Comunicação\",\r",
+									"    \"Estratégias de Comunicação\",\r",
+									"    \"Gestão de Qualidade\",\r",
+									"    \"Assuntos de Qualidade\",\r",
+									"    \"Estratégias de Qualidade\",\r",
+									"    \"Gestão de Projetos\",\r",
+									"    \"Assuntos de Projetos\",\r",
+									"    \"Gestão de Engenharia\",\r",
+									"    \"Estratégias de Engenharia\",\r",
+									"    \"Gestão de Logística\",\r",
+									"    \"Assuntos de Logística\",\r",
+									"    \"Gestão de Marketing\",\r",
+									"    \"Estratégias de Marketing\",\r",
+									"    \"Gestão de Design\",\r",
+									"    \"Assuntos de Design\",\r",
+									"    \"Gestão de Inovação\",\r",
+									"    \"Estratégias de Inovação\",\r",
+									"    \"Gestão de Sustentabilidade\",\r",
+									"    \"Assuntos de Sustentabilidade\",\r",
+									"    \"Estratégias de Sustentabilidade\",\r",
+									"  ];\r",
+									"\r",
+									"  const randomBoardName = boardNames[Math.floor(Math.random() * boardNames.length)];\r",
+									"\r",
+									"  pm.environment.set('boardName', randomBoardName);\r",
+									"}\r",
+									"\r",
+									"generateBoardName();\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"{{boardName}}\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{Token}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{Token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

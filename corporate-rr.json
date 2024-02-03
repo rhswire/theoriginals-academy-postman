@@ -1,0 +1,4911 @@
+{
+	"info": {
+		"_postman_id": "76b66f25-75f8-43e5-a43d-e9259527936b",
+		"name": "Corporate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27688809",
+		"_collection_link": "https://lively-comet-905188.postman.co/workspace/The-Originals~84b237fe-737d-4f44-bcb8-196c1c02072d/collection/27688809-76b66f25-75f8-43e5-a43d-e9259527936b?action=share&source=collection_link&creator=27688809"
+	},
+	"item": [
+		{
+			"name": "Login ADMIN",
+			"item": [
+				{
+					"name": "Login ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Novo ADMIN",
+			"item": [
+				{
+					"name": "Novo Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function gerarCPF() {\r",
+									"    let num = Math.floor(Math.random() * 999999999);\r",
+									"    let cpf = num.toString().padStart(9, '0');\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"\r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"function calcularDigito(cpf) {\r",
+									"    let soma = 0;\r",
+									"    for (let i = 0; i < cpf.length; i++) {\r",
+									"        soma += parseInt(cpf[i]) * ((cpf.length + 1) - i);\r",
+									"    }\r",
+									"    let resto = (soma * 10) % 11;\r",
+									"    return (resto > 9) ? '0' : resto.toString();\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"cpf\", gerarCPF());\r",
+									"\r",
+									"function generateRandomPassword() {\r",
+									"  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"  const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+									"  const numbers = '0123456789';\r",
+									"  const allChars = uppercaseChars + lowercaseChars + specialChars + numbers;\r",
+									"\r",
+									"  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];\r",
+									"\r",
+									"  const passwordLength = Math.floor(Math.random() * 5) + 8; // Entre 8 e 12 dígitos\r",
+									"\r",
+									"  const password = [\r",
+									"    getRandomChar(uppercaseChars),\r",
+									"    getRandomChar(lowercaseChars),\r",
+									"    getRandomChar(specialChars),\r",
+									"    getRandomChar(numbers),\r",
+									"    ...Array.from({ length: passwordLength - 4 }, () => getRandomChar(allChars))\r",
+									"  ].sort(() => Math.random() - 0.5).join('');\r",
+									"\r",
+									"  pm.environment.set('password', password);\r",
+									"}\r",
+									"\r",
+									"generateRandomPassword();\r",
+									"\r",
+									"\r",
+									"function generateFullName() {\r",
+									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
+									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"\r",
+									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
+									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
+									"\r",
+									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
+									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"\r",
+									"  pm.environment.set('fullName', fullName);\r",
+									"  pm.environment.set('mailRegister', email);\r",
+									"}\r",
+									"generateFullName();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"mail\": \"{{mailRegister}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{mailRegister}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cadastro Empresa",
+			"item": [
+				{
+					"name": "Novo cadastro Empresa (Happy Path)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"id\",pm.variables.replaceIn(JSON.parse(responseBody).newCompany._id));\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check corporateName is full\", function () {\r",
+									"    pm.expect(pm.environment.get(\"corporateName\")).to.eql(JSON.parse(responseBody).newCompany.corporateName);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check registerCompany is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"cnpj\")).to.eql(JSON.parse(responseBody).newCompany.registerCompany);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check mail is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"email\")).to.eql(JSON.parse(responseBody).newCompany.mail);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check matriz is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"matriz\")).to.eql(JSON.parse(responseBody).newCompany.matriz);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check responsibleContact is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"responsibleContact\")).to.eql(JSON.parse(responseBody).newCompany.responsibleContact);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check telephone is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"telephone\")).to.eql(JSON.parse(responseBody).newCompany.telephone);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check serviceDescription is full\", function () {\r",
+									"    pm.expect(pm.variables.get(\"serviceDescription\")).to.eql(JSON.parse(responseBody).newCompany.serviceDescription);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has specific success message for corporateName\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var expectedMessage = \"Olá a companhia \" + pm.environment.get(\"corporateName\") + \" foi cadastrada com sucesso.\";\r",
+									"    pm.expect(jsonData.msg).to.eql(expectedMessage);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Gerar corporateName, matriz e email\r",
+									"function generateCorporateName() {\r",
+									"    const firstPart = [\r",
+									"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
+									"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
+									"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
+									"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+									"    ];\r",
+									"\r",
+									"    const secondPart = [\r",
+									"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
+									"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
+									"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
+									"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+									"    ];\r",
+									"\r",
+									"    const thirdPart = [\r",
+									"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
+									"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
+									"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
+									"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+									"    ];\r",
+									"\r",
+									"    const emailDomains = [\r",
+									"        \"@example.com\", \"@mail.com\", \"@business.com\", \"@corporate.com\",\r",
+									"        \"@enterprise.com\", \"@company.com\", \"@industry.com\", \"@commerce.com\",\r",
+									"        \"@firm.com\", \"@professional.com\"\r",
+									"    ];\r",
+									"\r",
+									"    const name1 = firstPart[Math.floor(Math.random() * firstPart.length)];\r",
+									"    const name2 = secondPart[Math.floor(Math.random() * secondPart.length)];\r",
+									"\r",
+									"    let corporateName = `${name1} ${name2}`;\r",
+									"    let matriz = `${corporateName} ${thirdPart[Math.floor(Math.random() * thirdPart.length)]}`;\r",
+									"\r",
+									"    // Escolhendo um domínio de e-mail aleatoriamente\r",
+									"    let emailDomain = emailDomains[Math.floor(Math.random() * emailDomains.length)];\r",
+									"    let email = `${corporateName.replace(/\\s+/g, '').toLowerCase()}${emailDomain}`;\r",
+									"\r",
+									"    return { corporateName, matriz, email };\r",
+									"}\r",
+									"\r",
+									"let { corporateName, matriz, email } = generateCorporateName();\r",
+									"pm.environment.set(\"corporateName\", corporateName);\r",
+									"pm.environment.set(\"matriz\", matriz);\r",
+									"pm.environment.set(\"email\", email);\r",
+									" \r",
+									"\r",
+									"\r",
+									"//Criar CNPJ da empresa\r",
+									"function generateCNPJ() {\r",
+									"    let cnpj = '';\r",
+									"    for (let i = 1; i <= 12; i++) {\r",
+									"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+									"    }\r",
+									"\r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									"\r",
+									"    return cnpj;\r",
+									"}\r",
+									"\r",
+									"function calculateVerificationDigit(cnpj) {\r",
+									"    let size = cnpj.length - 12;\r",
+									"    let numbers = cnpj.substring(0, size);\r",
+									"    let digits = cnpj.substring(size);\r",
+									"    let sum = 0;\r",
+									"    let pos = size - 7;\r",
+									"    for (let i = size; i >= 1; i--) {\r",
+									"        sum += numbers.charAt(size - i) * pos--;\r",
+									"        if (pos < 2) pos = 9;\r",
+									"    }\r",
+									"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+									"    return result.toString();\r",
+									"}\r",
+									"\r",
+									"let cnpj = generateCNPJ();\r",
+									"pm.environment.set(\"cnpj\", cnpj);\r",
+									"\r",
+									"\r",
+									"//Criar nome do responsável da empresa (responsibleContact)\r",
+									"\r",
+									"function generateResponsibleContact() {\r",
+									"    const firstNames = [\r",
+									"        \"Ana\", \"Beatriz\", \"Carlos\", \"Daniel\", \"Eduardo\", \r",
+									"        \"Fernanda\", \"Gabriel\", \"Helena\", \"Isabela\", \"João\",\r",
+									"        \"Karina\", \"Lucas\", \"Mariana\", \"Nícolas\", \"Olívia\",\r",
+									"        \"Paulo\", \"Rafael\", \"Sofia\", \"Tiago\", \"Vitória\"\r",
+									"    ];\r",
+									"\r",
+									"    const lastNames = [\r",
+									"        \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\", \r",
+									"        \"Ferreira\", \"Almeida\", \"Costa\", \"Gomes\", \"Martins\",\r",
+									"        \"Araújo\", \"Pereira\", \"Ribeiro\", \"Carvalho\", \"Mendes\",\r",
+									"        \"Barbosa\", \"Lima\", \"Correia\", \"Dias\", \"Rocha\"\r",
+									"    ];\r",
+									"\r",
+									"    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"\r",
+									"    return `${firstName} ${lastName}`;\r",
+									"}\r",
+									"\r",
+									"let responsibleContact = generateResponsibleContact();\r",
+									"pm.environment.set(\"responsibleContact\", responsibleContact);\r",
+									"\r",
+									"\r",
+									"//Criar a Descrição do tipo de serviços\r",
+									"function generateServiceDescription() {\r",
+									"    const services = [\r",
+									"        \"Telecomunicações\", \"Cafeteria\", \"Imagem e Som\", \"Consultoria Financeira\",\r",
+									"        \"Desenvolvimento de Software\", \"Marketing Digital\", \"E-commerce\",\r",
+									"        \"Gestão de Recursos Humanos\", \"Logística e Transportes\", \"Saúde e Bem-Estar\",\r",
+									"        \"Educação e Treinamento\", \"Arquitetura e Design de Interiores\", \r",
+									"        \"Serviços Jurídicos\", \"Turismo e Hospedagem\", \"Gastronomia e Restaurantes\",\r",
+									"        \"Construção Civil\", \"Agricultura e Pecuária\", \"Varejo e Atendimento ao Consumidor\",\r",
+									"        \"Artes e Entretenimento\", \"Manutenção e Serviços Gerais\"\r",
+									"    ];\r",
+									"\r",
+									"    const serviceDescription = services[Math.floor(Math.random() * services.length)];\r",
+									"    return serviceDescription;\r",
+									"}\r",
+									"\r",
+									"let serviceDescription = generateServiceDescription();\r",
+									"pm.environment.set(\"serviceDescription\", serviceDescription);\r",
+									"\r",
+									"//Criar telefone\r",
+									"function generateTelephone() {\r",
+									"    let telephone = '';\r",
+									"\r",
+									"    for (let i = 0; i < 14; i++) {\r",
+									"        telephone += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+									"    }\r",
+									"\r",
+									"    return telephone;\r",
+									"}\r",
+									"\r",
+									"let telephone = generateTelephone();\r",
+									"pm.environment.set(\"telephone\", telephone);\r",
+									"\r",
+									"//Criar cep\r",
+									"function generateZipCode() {\r",
+									"    let zipCode = '';\r",
+									"\r",
+									"    for (let i = 0; i < 8; i++) {\r",
+									"        zipCode += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+									"    }\r",
+									"\r",
+									"    return zipCode;\r",
+									"}\r",
+									"\r",
+									"let zipCode = generateZipCode();\r",
+									"pm.environment.set(\"zipCode\", zipCode);\r",
+									"\r",
+									"//Criar Cidade e Estado, Bairro e Rua\r",
+									"function generateLocationData() {\r",
+									"    const locationData = {\r",
+									"        \"SP\": {\r",
+									"            \"São Paulo\": {\r",
+									"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
+									"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+									"            },\r",
+									"            \"Campinas\": {\r",
+									"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",
+									"                \"streets\": [\"Rua José Paulino\", \"Av Aquidaban\", \"Rua Barreto Leme\", \"Av Orozimbo Maia\", \"Rua Dr Moraes Sales\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"RJ\": {\r",
+									"            \"Rio de Janeiro\": {\r",
+									"                \"districts\": [\"Copacabana\", \"Leblon\", \"Ipanema\", \"Botafogo\", \"Flamengo\"],\r",
+									"                \"streets\": [\"Av Atlântica\", \"Rua Visconde de Pirajá\", \"Av Nossa Sra. de Copacabana\", \"Rua Barata Ribeiro\", \"Rua Farme de Amoedo\"]\r",
+									"            },\r",
+									"            \"Niterói\": {\r",
+									"                \"districts\": [\"Icaraí\", \"São Francisco\", \"Charitas\", \"Santa Rosa\", \"Itaipu\"],\r",
+									"                \"streets\": [\"Rua Gavião Peixoto\", \"Av Quintino Bocaiúva\", \"Rua Mem de Sá\", \"Rua Mariz e Barros\", \"Rua Lopes Trovão\"]\r",
+									"            },\r",
+									"        },\r",
+									"     \"MG\": {\r",
+									"            \"Belo Horizonte\": {\r",
+									"                \"districts\": [\"Pampulha\", \"Savassi\", \"Lourdes\", \"Venda Nova\", \"Barreiro\"],\r",
+									"                \"streets\": [\"Av Afonso Pena\", \"Rua da Bahia\", \"Av Amazonas\", \"Rua Guaicuí\", \"Av do Contorno\"]\r",
+									"            },\r",
+									"            \"Uberlândia\": {\r",
+									"                \"districts\": [\"Santa Mônica\", \"Fundinho\", \"Cidade Jardim\", \"Brasil\", \"Umuarama\"],\r",
+									"                \"streets\": [\"Av Rondon Pacheco\", \"Av João Naves de Ávila\", \"Rua Olegário Maciel\", \"Av Floriano Peixoto\", \"Rua Duque de Caxias\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"BA\": {\r",
+									"            \"Salvador\": {\r",
+									"                \"districts\": [\"Barra\", \"Pituba\", \"Itapuã\", \"Brotas\", \"Caminho das Árvores\"],\r",
+									"                \"streets\": [\"Av Sete de Setembro\", \"Av ACM\", \"Av Paralela\", \"Rua das Hortênsias\", \"Rua Marquês de Caravelas\"]\r",
+									"            },\r",
+									"            \"Feira de Santana\": {\r",
+									"                \"districts\": [\"Centro\", \"Santa Mônica\", \"Capuchinhos\", \"Cidade Nova\", \"Kalilândia\"],\r",
+									"                \"streets\": [\"Rua JJ Seabra\", \"Av Getúlio Vargas\", \"Rua Marechal Deodoro\", \"Rua Carlos Valadares\", \"Rua Barão de Cotegipe\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"PR\": {\r",
+									"            \"Curitiba\": {\r",
+									"                \"districts\": [\"Batel\", \"Centro\", \"Alto da XV\", \"Água Verde\", \"Boa Vista\"],\r",
+									"                \"streets\": [\"Av do Batel\", \"Rua XV de Novembro\", \"Rua Mateus Leme\", \"Av Iguaçu\", \"Rua Holanda\"]\r",
+									"            },\r",
+									"            \"Londrina\": {\r",
+									"                \"districts\": [\"Centro\", \"Gleba Palhano\", \"Jardim Higienópolis\", \"Terra Bonita\", \"Jardim Shangri-La\"],\r",
+									"                \"streets\": [\"Av Higienópolis\", \"Rua Paranaguá\", \"Av Maringá\", \"Rua Sergipe\", \"Av Tiradentes\"]\r",
+									"            },\r",
+									"        }\r",
+									"    };\r",
+									"\r",
+									"    // Escolhe um estado aleatoriamente\r",
+									"    const states = Object.keys(locationData);\r",
+									"    const randomState = states[Math.floor(Math.random() * states.length)];\r",
+									"\r",
+									"    // Escolhe uma cidade aleatoriamente dentro do estado selecionado\r",
+									"    const cities = Object.keys(locationData[randomState]);\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"\r",
+									"    // Escolhe um bairro e uma rua aleatoriamente dentro da cidade selecionada\r",
+									"    const randomDistrict = locationData[randomState][randomCity].districts[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].districts.length)\r",
+									"    ];\r",
+									"    const randomStreet = locationData[randomState][randomCity].streets[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].streets.length)\r",
+									"    ];\r",
+									"\r",
+									"    return { state: randomState, city: randomCity, district: randomDistrict, street: randomStreet };\r",
+									"}\r",
+									"\r",
+									"let { state, city, district, street } = generateLocationData();\r",
+									"pm.environment.set(\"state\", state);\r",
+									"pm.environment.set(\"city\", city);\r",
+									"pm.environment.set(\"district\", district);\r",
+									"pm.environment.set(\"street\", street);\r",
+									"\r",
+									"//Gerar número aleatório\r",
+									"function generateRandomNumber() {\r",
+									"    const maxNumber = 9999999999; // Número máximo com 10 dígitos\r",
+									"    return Math.floor(Math.random() * (maxNumber + 1)).toString(); // Gera um número aleatório entre 0 e 9999999999\r",
+									"}\r",
+									"\r",
+									"let number = generateRandomNumber();\r",
+									"pm.environment.set(\"number\", number);\r",
+									"\r",
+									"//Criar um complemento aleatório\r",
+									"function generateAddressComplement() {\r",
+									"    const complementTypes = [\"Apartamento\", \"Bloco\", \"Sala\", \"Lote\", \"Andar\"];\r",
+									"    const complement = complementTypes[Math.floor(Math.random() * complementTypes.length)];\r",
+									"\r",
+									"    let complementNumber;\r",
+									"    if (complement === \"Bloco\") {\r",
+									"        // Para \"Bloco\", usar letras\r",
+									"        const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+									"        complementNumber = letters.charAt(Math.floor(Math.random() * letters.length));\r",
+									"    } else {\r",
+									"        // Para os outros tipos, usar números\r",
+									"        complementNumber = Math.floor(Math.random() * 100).toString();\r",
+									"    }\r",
+									"\r",
+									"    return `${complement} ${complementNumber}`;\r",
+									"}\r",
+									"\r",
+									"let complement = generateAddressComplement();\r",
+									"pm.environment.set(\"complement\", complement);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\",\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/company/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"company",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver empresas cadastradas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\",\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/company/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"company",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Editar Cadastro de Empresa",
+			"item": [
+				{
+					"name": "corporateName",
+					"item": [
+						{
+							"name": "corporateName - Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"corporateName\",pm.variables.replaceIn(JSON.parse(responseBody).updatedCompany.corporateName));\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"A mensagem 'Companhia atualizada com sucesso.' está presente\", function () {\r",
+											"    var responseBody = pm.response.json();\r",
+											"    pm.expect(responseBody.msg).to.eql(\"Companhia atualizada com sucesso.\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"Nova Link Corp\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - campo em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - com caracteres especiais",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"Nova Link @\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - com números apenas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"12345 1\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - com letras apenas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"Nova Link Corp\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - nome repetido",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"Yellow Technologies\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "corporateName - mais de 100 caracteres",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"Nova Link 123456789123456789123456789123456789123456789123456789123456789123456789123456789123756789\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "registerCompany",
+					"item": [
+						{
+							"name": "Novo cadastro Empresa (Happy Path)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"id\",pm.variables.replaceIn(JSON.parse(responseBody).newCompany._id));\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check corporateName is full\", function () {\r",
+											"    pm.expect(pm.environment.get(\"corporateName\")).to.eql(JSON.parse(responseBody).newCompany.corporateName);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check registerCompany is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"cnpj\")).to.eql(JSON.parse(responseBody).newCompany.registerCompany);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check mail is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"email\")).to.eql(JSON.parse(responseBody).newCompany.mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check matriz is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"matriz\")).to.eql(JSON.parse(responseBody).newCompany.matriz);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check responsibleContact is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"responsibleContact\")).to.eql(JSON.parse(responseBody).newCompany.responsibleContact);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check telephone is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"telephone\")).to.eql(JSON.parse(responseBody).newCompany.telephone);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check serviceDescription is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"serviceDescription\")).to.eql(JSON.parse(responseBody).newCompany.serviceDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has specific success message for corporateName\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    var expectedMessage = \"Olá a companhia \" + pm.environment.get(\"corporateName\") + \" foi cadastrada com sucesso.\";\r",
+											"    pm.expect(jsonData.msg).to.eql(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//Gerar corporateName, matriz e email\r",
+											"function generateCorporateName() {\r",
+											"    const firstPart = [\r",
+											"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
+											"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
+											"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
+											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+											"    ];\r",
+											"\r",
+											"    const secondPart = [\r",
+											"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
+											"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
+											"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
+											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+											"    ];\r",
+											"\r",
+											"    const thirdPart = [\r",
+											"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
+											"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
+											"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
+											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+											"    ];\r",
+											"\r",
+											"    const emailDomains = [\r",
+											"        \"@example.com\", \"@mail.com\", \"@business.com\", \"@corporate.com\",\r",
+											"        \"@enterprise.com\", \"@company.com\", \"@industry.com\", \"@commerce.com\",\r",
+											"        \"@firm.com\", \"@professional.com\"\r",
+											"    ];\r",
+											"\r",
+											"    const name1 = firstPart[Math.floor(Math.random() * firstPart.length)];\r",
+											"    const name2 = secondPart[Math.floor(Math.random() * secondPart.length)];\r",
+											"\r",
+											"    let corporateName = `${name1} ${name2}`;\r",
+											"    let matriz = `${corporateName} ${thirdPart[Math.floor(Math.random() * thirdPart.length)]}`;\r",
+											"\r",
+											"    // Escolhendo um domínio de e-mail aleatoriamente\r",
+											"    let emailDomain = emailDomains[Math.floor(Math.random() * emailDomains.length)];\r",
+											"    let email = `${corporateName.replace(/\\s+/g, '').toLowerCase()}${emailDomain}`;\r",
+											"\r",
+											"    return { corporateName, matriz, email };\r",
+											"}\r",
+											"\r",
+											"let { corporateName, matriz, email } = generateCorporateName();\r",
+											"pm.environment.set(\"corporateName\", corporateName);\r",
+											"pm.environment.set(\"matriz\", matriz);\r",
+											"pm.environment.set(\"email\", email);\r",
+											" \r",
+											"\r",
+											"\r",
+											"//Criar CNPJ da empresa\r",
+											"function generateCNPJ() {\r",
+											"    let cnpj = '';\r",
+											"    for (let i = 1; i <= 12; i++) {\r",
+											"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+											"    }\r",
+											"\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"\r",
+											"    return cnpj;\r",
+											"}\r",
+											"\r",
+											"function calculateVerificationDigit(cnpj) {\r",
+											"    let size = cnpj.length - 12;\r",
+											"    let numbers = cnpj.substring(0, size);\r",
+											"    let digits = cnpj.substring(size);\r",
+											"    let sum = 0;\r",
+											"    let pos = size - 7;\r",
+											"    for (let i = size; i >= 1; i--) {\r",
+											"        sum += numbers.charAt(size - i) * pos--;\r",
+											"        if (pos < 2) pos = 9;\r",
+											"    }\r",
+											"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+											"    return result.toString();\r",
+											"}\r",
+											"\r",
+											"let cnpj = generateCNPJ();\r",
+											"pm.environment.set(\"cnpj\", cnpj);\r",
+											"\r",
+											"\r",
+											"//Criar nome do responsável da empresa (responsibleContact)\r",
+											"\r",
+											"function generateResponsibleContact() {\r",
+											"    const firstNames = [\r",
+											"        \"Ana\", \"Beatriz\", \"Carlos\", \"Daniel\", \"Eduardo\", \r",
+											"        \"Fernanda\", \"Gabriel\", \"Helena\", \"Isabela\", \"João\",\r",
+											"        \"Karina\", \"Lucas\", \"Mariana\", \"Nícolas\", \"Olívia\",\r",
+											"        \"Paulo\", \"Rafael\", \"Sofia\", \"Tiago\", \"Vitória\"\r",
+											"    ];\r",
+											"\r",
+											"    const lastNames = [\r",
+											"        \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\", \r",
+											"        \"Ferreira\", \"Almeida\", \"Costa\", \"Gomes\", \"Martins\",\r",
+											"        \"Araújo\", \"Pereira\", \"Ribeiro\", \"Carvalho\", \"Mendes\",\r",
+											"        \"Barbosa\", \"Lima\", \"Correia\", \"Dias\", \"Rocha\"\r",
+											"    ];\r",
+											"\r",
+											"    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+											"    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+											"\r",
+											"    return `${firstName} ${lastName}`;\r",
+											"}\r",
+											"\r",
+											"let responsibleContact = generateResponsibleContact();\r",
+											"pm.environment.set(\"responsibleContact\", responsibleContact);\r",
+											"\r",
+											"\r",
+											"//Criar a Descrição do tipo de serviços\r",
+											"function generateServiceDescription() {\r",
+											"    const services = [\r",
+											"        \"Telecomunicações\", \"Cafeteria\", \"Imagem e Som\", \"Consultoria Financeira\",\r",
+											"        \"Desenvolvimento de Software\", \"Marketing Digital\", \"E-commerce\",\r",
+											"        \"Gestão de Recursos Humanos\", \"Logística e Transportes\", \"Saúde e Bem-Estar\",\r",
+											"        \"Educação e Treinamento\", \"Arquitetura e Design de Interiores\", \r",
+											"        \"Serviços Jurídicos\", \"Turismo e Hospedagem\", \"Gastronomia e Restaurantes\",\r",
+											"        \"Construção Civil\", \"Agricultura e Pecuária\", \"Varejo e Atendimento ao Consumidor\",\r",
+											"        \"Artes e Entretenimento\", \"Manutenção e Serviços Gerais\"\r",
+											"    ];\r",
+											"\r",
+											"    const serviceDescription = services[Math.floor(Math.random() * services.length)];\r",
+											"    return serviceDescription;\r",
+											"}\r",
+											"\r",
+											"let serviceDescription = generateServiceDescription();\r",
+											"pm.environment.set(\"serviceDescription\", serviceDescription);\r",
+											"\r",
+											"//Criar telefone\r",
+											"function generateTelephone() {\r",
+											"    let telephone = '';\r",
+											"\r",
+											"    for (let i = 0; i < 14; i++) {\r",
+											"        telephone += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+											"    }\r",
+											"\r",
+											"    return telephone;\r",
+											"}\r",
+											"\r",
+											"let telephone = generateTelephone();\r",
+											"pm.environment.set(\"telephone\", telephone);\r",
+											"\r",
+											"//Criar cep\r",
+											"function generateZipCode() {\r",
+											"    let zipCode = '';\r",
+											"\r",
+											"    for (let i = 0; i < 8; i++) {\r",
+											"        zipCode += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+											"    }\r",
+											"\r",
+											"    return zipCode;\r",
+											"}\r",
+											"\r",
+											"let zipCode = generateZipCode();\r",
+											"pm.environment.set(\"zipCode\", zipCode);\r",
+											"\r",
+											"//Criar Cidade e Estado, Bairro e Rua\r",
+											"function generateLocationData() {\r",
+											"    const locationData = {\r",
+											"        \"SP\": {\r",
+											"            \"São Paulo\": {\r",
+											"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
+											"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+											"            },\r",
+											"            \"Campinas\": {\r",
+											"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",
+											"                \"streets\": [\"Rua José Paulino\", \"Av Aquidaban\", \"Rua Barreto Leme\", \"Av Orozimbo Maia\", \"Rua Dr Moraes Sales\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"RJ\": {\r",
+											"            \"Rio de Janeiro\": {\r",
+											"                \"districts\": [\"Copacabana\", \"Leblon\", \"Ipanema\", \"Botafogo\", \"Flamengo\"],\r",
+											"                \"streets\": [\"Av Atlântica\", \"Rua Visconde de Pirajá\", \"Av Nossa Sra. de Copacabana\", \"Rua Barata Ribeiro\", \"Rua Farme de Amoedo\"]\r",
+											"            },\r",
+											"            \"Niterói\": {\r",
+											"                \"districts\": [\"Icaraí\", \"São Francisco\", \"Charitas\", \"Santa Rosa\", \"Itaipu\"],\r",
+											"                \"streets\": [\"Rua Gavião Peixoto\", \"Av Quintino Bocaiúva\", \"Rua Mem de Sá\", \"Rua Mariz e Barros\", \"Rua Lopes Trovão\"]\r",
+											"            },\r",
+											"        },\r",
+											"     \"MG\": {\r",
+											"            \"Belo Horizonte\": {\r",
+											"                \"districts\": [\"Pampulha\", \"Savassi\", \"Lourdes\", \"Venda Nova\", \"Barreiro\"],\r",
+											"                \"streets\": [\"Av Afonso Pena\", \"Rua da Bahia\", \"Av Amazonas\", \"Rua Guaicuí\", \"Av do Contorno\"]\r",
+											"            },\r",
+											"            \"Uberlândia\": {\r",
+											"                \"districts\": [\"Santa Mônica\", \"Fundinho\", \"Cidade Jardim\", \"Brasil\", \"Umuarama\"],\r",
+											"                \"streets\": [\"Av Rondon Pacheco\", \"Av João Naves de Ávila\", \"Rua Olegário Maciel\", \"Av Floriano Peixoto\", \"Rua Duque de Caxias\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"BA\": {\r",
+											"            \"Salvador\": {\r",
+											"                \"districts\": [\"Barra\", \"Pituba\", \"Itapuã\", \"Brotas\", \"Caminho das Árvores\"],\r",
+											"                \"streets\": [\"Av Sete de Setembro\", \"Av ACM\", \"Av Paralela\", \"Rua das Hortênsias\", \"Rua Marquês de Caravelas\"]\r",
+											"            },\r",
+											"            \"Feira de Santana\": {\r",
+											"                \"districts\": [\"Centro\", \"Santa Mônica\", \"Capuchinhos\", \"Cidade Nova\", \"Kalilândia\"],\r",
+											"                \"streets\": [\"Rua JJ Seabra\", \"Av Getúlio Vargas\", \"Rua Marechal Deodoro\", \"Rua Carlos Valadares\", \"Rua Barão de Cotegipe\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"PR\": {\r",
+											"            \"Curitiba\": {\r",
+											"                \"districts\": [\"Batel\", \"Centro\", \"Alto da XV\", \"Água Verde\", \"Boa Vista\"],\r",
+											"                \"streets\": [\"Av do Batel\", \"Rua XV de Novembro\", \"Rua Mateus Leme\", \"Av Iguaçu\", \"Rua Holanda\"]\r",
+											"            },\r",
+											"            \"Londrina\": {\r",
+											"                \"districts\": [\"Centro\", \"Gleba Palhano\", \"Jardim Higienópolis\", \"Terra Bonita\", \"Jardim Shangri-La\"],\r",
+											"                \"streets\": [\"Av Higienópolis\", \"Rua Paranaguá\", \"Av Maringá\", \"Rua Sergipe\", \"Av Tiradentes\"]\r",
+											"            },\r",
+											"        }\r",
+											"    };\r",
+											"\r",
+											"    // Escolhe um estado aleatoriamente\r",
+											"    const states = Object.keys(locationData);\r",
+											"    const randomState = states[Math.floor(Math.random() * states.length)];\r",
+											"\r",
+											"    // Escolhe uma cidade aleatoriamente dentro do estado selecionado\r",
+											"    const cities = Object.keys(locationData[randomState]);\r",
+											"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+											"\r",
+											"    // Escolhe um bairro e uma rua aleatoriamente dentro da cidade selecionada\r",
+											"    const randomDistrict = locationData[randomState][randomCity].districts[\r",
+											"        Math.floor(Math.random() * locationData[randomState][randomCity].districts.length)\r",
+											"    ];\r",
+											"    const randomStreet = locationData[randomState][randomCity].streets[\r",
+											"        Math.floor(Math.random() * locationData[randomState][randomCity].streets.length)\r",
+											"    ];\r",
+											"\r",
+											"    return { state: randomState, city: randomCity, district: randomDistrict, street: randomStreet };\r",
+											"}\r",
+											"\r",
+											"let { state, city, district, street } = generateLocationData();\r",
+											"pm.environment.set(\"state\", state);\r",
+											"pm.environment.set(\"city\", city);\r",
+											"pm.environment.set(\"district\", district);\r",
+											"pm.environment.set(\"street\", street);\r",
+											"\r",
+											"//Gerar número aleatório\r",
+											"function generateRandomNumber() {\r",
+											"    const maxNumber = 9999999999; // Número máximo com 10 dígitos\r",
+											"    return Math.floor(Math.random() * (maxNumber + 1)).toString(); // Gera um número aleatório entre 0 e 9999999999\r",
+											"}\r",
+											"\r",
+											"let number = generateRandomNumber();\r",
+											"pm.environment.set(\"number\", number);\r",
+											"\r",
+											"//Criar um complemento aleatório\r",
+											"function generateAddressComplement() {\r",
+											"    const complementTypes = [\"Apartamento\", \"Bloco\", \"Sala\", \"Lote\", \"Andar\"];\r",
+											"    const complement = complementTypes[Math.floor(Math.random() * complementTypes.length)];\r",
+											"\r",
+											"    let complementNumber;\r",
+											"    if (complement === \"Bloco\") {\r",
+											"        // Para \"Bloco\", usar letras\r",
+											"        const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+											"        complementNumber = letters.charAt(Math.floor(Math.random() * letters.length));\r",
+											"    } else {\r",
+											"        // Para os outros tipos, usar números\r",
+											"        complementNumber = Math.floor(Math.random() * 100).toString();\r",
+											"    }\r",
+											"\r",
+											"    return `${complement} ${complementNumber}`;\r",
+											"}\r",
+											"\r",
+											"let complement = generateAddressComplement();\r",
+											"pm.environment.set(\"complement\", complement);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\",\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - novo cnpj",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//Criar CNPJ da empresa\r",
+											"function generateCNPJ() {\r",
+											"    let cnpj = '';\r",
+											"    for (let i = 1; i <= 12; i++) {\r",
+											"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+											"    }\r",
+											"\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"\r",
+											"    return cnpj;\r",
+											"}\r",
+											"\r",
+											"function calculateVerificationDigit(cnpj) {\r",
+											"    let size = cnpj.length - 12;\r",
+											"    let numbers = cnpj.substring(0, size);\r",
+											"    let digits = cnpj.substring(size);\r",
+											"    let sum = 0;\r",
+											"    let pos = size - 7;\r",
+											"    for (let i = size; i >= 1; i--) {\r",
+											"        sum += numbers.charAt(size - i) * pos--;\r",
+											"        if (pos < 2) pos = 9;\r",
+											"    }\r",
+											"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+											"    return result.toString();\r",
+											"}\r",
+											"\r",
+											"let cnpj = generateCNPJ();\r",
+											"pm.environment.set(\"cnpj\", cnpj);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - cnpj repetido",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"26461478013700\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - com mais de 14 caracteres",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"264614780132005\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - cnpj em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - cnpj com letra",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"2646147801370a\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registerCompany - cnpj com caracter especial",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"2646147801370a\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "mail",
+					"item": [
+						{
+							"name": "Novo cadastro Empresa (Happy Path)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"id\",pm.variables.replaceIn(JSON.parse(responseBody).newCompany._id));\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check corporateName is full\", function () {\r",
+											"    pm.expect(pm.environment.get(\"corporateName\")).to.eql(JSON.parse(responseBody).newCompany.corporateName);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check registerCompany is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"cnpj\")).to.eql(JSON.parse(responseBody).newCompany.registerCompany);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check mail is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"email\")).to.eql(JSON.parse(responseBody).newCompany.mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check matriz is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"matriz\")).to.eql(JSON.parse(responseBody).newCompany.matriz);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check responsibleContact is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"responsibleContact\")).to.eql(JSON.parse(responseBody).newCompany.responsibleContact);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check telephone is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"telephone\")).to.eql(JSON.parse(responseBody).newCompany.telephone);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check serviceDescription is full\", function () {\r",
+											"    pm.expect(pm.variables.get(\"serviceDescription\")).to.eql(JSON.parse(responseBody).newCompany.serviceDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has specific success message for corporateName\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    var expectedMessage = \"Olá a companhia \" + pm.environment.get(\"corporateName\") + \" foi cadastrada com sucesso.\";\r",
+											"    pm.expect(jsonData.msg).to.eql(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//Gerar corporateName, matriz e email\r",
+											"function generateCorporateName() {\r",
+											"    const firstPart = [\r",
+											"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
+											"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
+											"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
+											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+											"    ];\r",
+											"\r",
+											"    const secondPart = [\r",
+											"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
+											"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
+											"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
+											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+											"    ];\r",
+											"\r",
+											"    const thirdPart = [\r",
+											"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
+											"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
+											"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
+											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+											"    ];\r",
+											"\r",
+											"    const emailDomains = [\r",
+											"        \"@example.com\", \"@mail.com\", \"@business.com\", \"@corporate.com\",\r",
+											"        \"@enterprise.com\", \"@company.com\", \"@industry.com\", \"@commerce.com\",\r",
+											"        \"@firm.com\", \"@professional.com\"\r",
+											"    ];\r",
+											"\r",
+											"    const name1 = firstPart[Math.floor(Math.random() * firstPart.length)];\r",
+											"    const name2 = secondPart[Math.floor(Math.random() * secondPart.length)];\r",
+											"\r",
+											"    let corporateName = `${name1} ${name2}`;\r",
+											"    let matriz = `${corporateName} ${thirdPart[Math.floor(Math.random() * thirdPart.length)]}`;\r",
+											"\r",
+											"    // Escolhendo um domínio de e-mail aleatoriamente\r",
+											"    let emailDomain = emailDomains[Math.floor(Math.random() * emailDomains.length)];\r",
+											"    let email = `${corporateName.replace(/\\s+/g, '').toLowerCase()}${emailDomain}`;\r",
+											"\r",
+											"    return { corporateName, matriz, email };\r",
+											"}\r",
+											"\r",
+											"let { corporateName, matriz, email } = generateCorporateName();\r",
+											"pm.environment.set(\"corporateName\", corporateName);\r",
+											"pm.environment.set(\"matriz\", matriz);\r",
+											"pm.environment.set(\"email\", email);\r",
+											" \r",
+											"\r",
+											"\r",
+											"//Criar CNPJ da empresa\r",
+											"function generateCNPJ() {\r",
+											"    let cnpj = '';\r",
+											"    for (let i = 1; i <= 12; i++) {\r",
+											"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+											"    }\r",
+											"\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"    cnpj += calculateVerificationDigit(cnpj);\r",
+											"\r",
+											"    return cnpj;\r",
+											"}\r",
+											"\r",
+											"function calculateVerificationDigit(cnpj) {\r",
+											"    let size = cnpj.length - 12;\r",
+											"    let numbers = cnpj.substring(0, size);\r",
+											"    let digits = cnpj.substring(size);\r",
+											"    let sum = 0;\r",
+											"    let pos = size - 7;\r",
+											"    for (let i = size; i >= 1; i--) {\r",
+											"        sum += numbers.charAt(size - i) * pos--;\r",
+											"        if (pos < 2) pos = 9;\r",
+											"    }\r",
+											"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+											"    return result.toString();\r",
+											"}\r",
+											"\r",
+											"let cnpj = generateCNPJ();\r",
+											"pm.environment.set(\"cnpj\", cnpj);\r",
+											"\r",
+											"\r",
+											"//Criar nome do responsável da empresa (responsibleContact)\r",
+											"\r",
+											"function generateResponsibleContact() {\r",
+											"    const firstNames = [\r",
+											"        \"Ana\", \"Beatriz\", \"Carlos\", \"Daniel\", \"Eduardo\", \r",
+											"        \"Fernanda\", \"Gabriel\", \"Helena\", \"Isabela\", \"João\",\r",
+											"        \"Karina\", \"Lucas\", \"Mariana\", \"Nícolas\", \"Olívia\",\r",
+											"        \"Paulo\", \"Rafael\", \"Sofia\", \"Tiago\", \"Vitória\"\r",
+											"    ];\r",
+											"\r",
+											"    const lastNames = [\r",
+											"        \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\", \r",
+											"        \"Ferreira\", \"Almeida\", \"Costa\", \"Gomes\", \"Martins\",\r",
+											"        \"Araújo\", \"Pereira\", \"Ribeiro\", \"Carvalho\", \"Mendes\",\r",
+											"        \"Barbosa\", \"Lima\", \"Correia\", \"Dias\", \"Rocha\"\r",
+											"    ];\r",
+											"\r",
+											"    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+											"    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+											"\r",
+											"    return `${firstName} ${lastName}`;\r",
+											"}\r",
+											"\r",
+											"let responsibleContact = generateResponsibleContact();\r",
+											"pm.environment.set(\"responsibleContact\", responsibleContact);\r",
+											"\r",
+											"\r",
+											"//Criar a Descrição do tipo de serviços\r",
+											"function generateServiceDescription() {\r",
+											"    const services = [\r",
+											"        \"Telecomunicações\", \"Cafeteria\", \"Imagem e Som\", \"Consultoria Financeira\",\r",
+											"        \"Desenvolvimento de Software\", \"Marketing Digital\", \"E-commerce\",\r",
+											"        \"Gestão de Recursos Humanos\", \"Logística e Transportes\", \"Saúde e Bem-Estar\",\r",
+											"        \"Educação e Treinamento\", \"Arquitetura e Design de Interiores\", \r",
+											"        \"Serviços Jurídicos\", \"Turismo e Hospedagem\", \"Gastronomia e Restaurantes\",\r",
+											"        \"Construção Civil\", \"Agricultura e Pecuária\", \"Varejo e Atendimento ao Consumidor\",\r",
+											"        \"Artes e Entretenimento\", \"Manutenção e Serviços Gerais\"\r",
+											"    ];\r",
+											"\r",
+											"    const serviceDescription = services[Math.floor(Math.random() * services.length)];\r",
+											"    return serviceDescription;\r",
+											"}\r",
+											"\r",
+											"let serviceDescription = generateServiceDescription();\r",
+											"pm.environment.set(\"serviceDescription\", serviceDescription);\r",
+											"\r",
+											"//Criar telefone\r",
+											"function generateTelephone() {\r",
+											"    let telephone = '';\r",
+											"\r",
+											"    for (let i = 0; i < 14; i++) {\r",
+											"        telephone += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+											"    }\r",
+											"\r",
+											"    return telephone;\r",
+											"}\r",
+											"\r",
+											"let telephone = generateTelephone();\r",
+											"pm.environment.set(\"telephone\", telephone);\r",
+											"\r",
+											"//Criar cep\r",
+											"function generateZipCode() {\r",
+											"    let zipCode = '';\r",
+											"\r",
+											"    for (let i = 0; i < 8; i++) {\r",
+											"        zipCode += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+											"    }\r",
+											"\r",
+											"    return zipCode;\r",
+											"}\r",
+											"\r",
+											"let zipCode = generateZipCode();\r",
+											"pm.environment.set(\"zipCode\", zipCode);\r",
+											"\r",
+											"//Criar Cidade e Estado, Bairro e Rua\r",
+											"function generateLocationData() {\r",
+											"    const locationData = {\r",
+											"        \"SP\": {\r",
+											"            \"São Paulo\": {\r",
+											"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
+											"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+											"            },\r",
+											"            \"Campinas\": {\r",
+											"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",
+											"                \"streets\": [\"Rua José Paulino\", \"Av Aquidaban\", \"Rua Barreto Leme\", \"Av Orozimbo Maia\", \"Rua Dr Moraes Sales\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"RJ\": {\r",
+											"            \"Rio de Janeiro\": {\r",
+											"                \"districts\": [\"Copacabana\", \"Leblon\", \"Ipanema\", \"Botafogo\", \"Flamengo\"],\r",
+											"                \"streets\": [\"Av Atlântica\", \"Rua Visconde de Pirajá\", \"Av Nossa Sra. de Copacabana\", \"Rua Barata Ribeiro\", \"Rua Farme de Amoedo\"]\r",
+											"            },\r",
+											"            \"Niterói\": {\r",
+											"                \"districts\": [\"Icaraí\", \"São Francisco\", \"Charitas\", \"Santa Rosa\", \"Itaipu\"],\r",
+											"                \"streets\": [\"Rua Gavião Peixoto\", \"Av Quintino Bocaiúva\", \"Rua Mem de Sá\", \"Rua Mariz e Barros\", \"Rua Lopes Trovão\"]\r",
+											"            },\r",
+											"        },\r",
+											"     \"MG\": {\r",
+											"            \"Belo Horizonte\": {\r",
+											"                \"districts\": [\"Pampulha\", \"Savassi\", \"Lourdes\", \"Venda Nova\", \"Barreiro\"],\r",
+											"                \"streets\": [\"Av Afonso Pena\", \"Rua da Bahia\", \"Av Amazonas\", \"Rua Guaicuí\", \"Av do Contorno\"]\r",
+											"            },\r",
+											"            \"Uberlândia\": {\r",
+											"                \"districts\": [\"Santa Mônica\", \"Fundinho\", \"Cidade Jardim\", \"Brasil\", \"Umuarama\"],\r",
+											"                \"streets\": [\"Av Rondon Pacheco\", \"Av João Naves de Ávila\", \"Rua Olegário Maciel\", \"Av Floriano Peixoto\", \"Rua Duque de Caxias\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"BA\": {\r",
+											"            \"Salvador\": {\r",
+											"                \"districts\": [\"Barra\", \"Pituba\", \"Itapuã\", \"Brotas\", \"Caminho das Árvores\"],\r",
+											"                \"streets\": [\"Av Sete de Setembro\", \"Av ACM\", \"Av Paralela\", \"Rua das Hortênsias\", \"Rua Marquês de Caravelas\"]\r",
+											"            },\r",
+											"            \"Feira de Santana\": {\r",
+											"                \"districts\": [\"Centro\", \"Santa Mônica\", \"Capuchinhos\", \"Cidade Nova\", \"Kalilândia\"],\r",
+											"                \"streets\": [\"Rua JJ Seabra\", \"Av Getúlio Vargas\", \"Rua Marechal Deodoro\", \"Rua Carlos Valadares\", \"Rua Barão de Cotegipe\"]\r",
+											"            },\r",
+											"        },\r",
+											"        \"PR\": {\r",
+											"            \"Curitiba\": {\r",
+											"                \"districts\": [\"Batel\", \"Centro\", \"Alto da XV\", \"Água Verde\", \"Boa Vista\"],\r",
+											"                \"streets\": [\"Av do Batel\", \"Rua XV de Novembro\", \"Rua Mateus Leme\", \"Av Iguaçu\", \"Rua Holanda\"]\r",
+											"            },\r",
+											"            \"Londrina\": {\r",
+											"                \"districts\": [\"Centro\", \"Gleba Palhano\", \"Jardim Higienópolis\", \"Terra Bonita\", \"Jardim Shangri-La\"],\r",
+											"                \"streets\": [\"Av Higienópolis\", \"Rua Paranaguá\", \"Av Maringá\", \"Rua Sergipe\", \"Av Tiradentes\"]\r",
+											"            },\r",
+											"        }\r",
+											"    };\r",
+											"\r",
+											"    // Escolhe um estado aleatoriamente\r",
+											"    const states = Object.keys(locationData);\r",
+											"    const randomState = states[Math.floor(Math.random() * states.length)];\r",
+											"\r",
+											"    // Escolhe uma cidade aleatoriamente dentro do estado selecionado\r",
+											"    const cities = Object.keys(locationData[randomState]);\r",
+											"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+											"\r",
+											"    // Escolhe um bairro e uma rua aleatoriamente dentro da cidade selecionada\r",
+											"    const randomDistrict = locationData[randomState][randomCity].districts[\r",
+											"        Math.floor(Math.random() * locationData[randomState][randomCity].districts.length)\r",
+											"    ];\r",
+											"    const randomStreet = locationData[randomState][randomCity].streets[\r",
+											"        Math.floor(Math.random() * locationData[randomState][randomCity].streets.length)\r",
+											"    ];\r",
+											"\r",
+											"    return { state: randomState, city: randomCity, district: randomDistrict, street: randomStreet };\r",
+											"}\r",
+											"\r",
+											"let { state, city, district, street } = generateLocationData();\r",
+											"pm.environment.set(\"state\", state);\r",
+											"pm.environment.set(\"city\", city);\r",
+											"pm.environment.set(\"district\", district);\r",
+											"pm.environment.set(\"street\", street);\r",
+											"\r",
+											"//Gerar número aleatório\r",
+											"function generateRandomNumber() {\r",
+											"    const maxNumber = 9999999999; // Número máximo com 10 dígitos\r",
+											"    return Math.floor(Math.random() * (maxNumber + 1)).toString(); // Gera um número aleatório entre 0 e 9999999999\r",
+											"}\r",
+											"\r",
+											"let number = generateRandomNumber();\r",
+											"pm.environment.set(\"number\", number);\r",
+											"\r",
+											"//Criar um complemento aleatório\r",
+											"function generateAddressComplement() {\r",
+											"    const complementTypes = [\"Apartamento\", \"Bloco\", \"Sala\", \"Lote\", \"Andar\"];\r",
+											"    const complement = complementTypes[Math.floor(Math.random() * complementTypes.length)];\r",
+											"\r",
+											"    let complementNumber;\r",
+											"    if (complement === \"Bloco\") {\r",
+											"        // Para \"Bloco\", usar letras\r",
+											"        const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+											"        complementNumber = letters.charAt(Math.floor(Math.random() * letters.length));\r",
+											"    } else {\r",
+											"        // Para os outros tipos, usar números\r",
+											"        complementNumber = Math.floor(Math.random() * 100).toString();\r",
+											"    }\r",
+											"\r",
+											"    return `${complement} ${complementNumber}`;\r",
+											"}\r",
+											"\r",
+											"let complement = generateAddressComplement();\r",
+											"pm.environment.set(\"complement\", complement);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\",\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mail - Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"novalink1@firm.com\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mail - em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mail - formato inválido sem ponto",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"novalink1@firm\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mail - formato invalido sem @",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"novalink\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "matriz",
+					"item": [
+						{
+							"name": "matriz - Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"Nova Link Creators teste\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "matriz - campo em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "matriz - apenas com números",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"1234\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "matriz - apenas com letras",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"Nova Link Creators\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "matriz - com caracteres especiais",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"Nova Link & cia\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							},
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "responsibleContact",
+					"item": [
+						{
+							"name": "responsibleContact - Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"Carlos José\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "responsibleContact - em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "responsibleContact - com número",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"Carlos Pereira1\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "responsibleContact - com caracter especial",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"Carlos Pereira$\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "responsibleContact - mais de 100 caracteres",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"Carlos PereiraAAAAAAAAAABBBBBBBBBBCCCCCCCCCBBBBBBBBBBDDDDDDDDDDEEEEEEEEEEFFFFFFFFFFGGGGGGGGGGHHHHHHHHHHiiii\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "responsibleContact - com mais de 2 nomes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"Carlos Pereira Júnior\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "telephone",
+					"item": [
+						{
+							"name": "telephone- Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"255345678912345\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "telephone- campo em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "telephone- com mais de 15 números",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"25534567891234578945\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "telephone- com letras",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"25534567891234a\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "telephone- com caracter especial",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"25534567891234%\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "serviceDescription",
+					"item": [
+						{
+							"name": "serviceDescription - Happy Path",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"Saúde e Bem-Estar do Cliente 123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "serviceDescription - em branco",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "serviceDescription - apenas letras",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"Saúde e Bem-Estar do Cliente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "serviceDescription - apenas números",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"12345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "serviceDescription - com caracteres especiais",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{Token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"Saúde & Bem-Estar do Cliente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/company/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"company",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{Token}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{Token}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

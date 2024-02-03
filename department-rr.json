@@ -1,0 +1,3409 @@
+{
+	"info": {
+		"_postman_id": "b8dfebfe-1952-4b06-8d58-7c1bfebef8c0",
+		"name": "Department",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27688809",
+		"_collection_link": "https://lively-comet-905188.postman.co/workspace/The-Originals~84b237fe-737d-4f44-bcb8-196c1c02072d/collection/27688809-b8dfebfe-1952-4b06-8d58-7c1bfebef8c0?action=share&source=collection_link&creator=27688809"
+	},
+	"item": [
+		{
+			"name": "Login ADMIN",
+			"item": [
+				{
+					"name": "Login ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Novo ADMIN",
+			"item": [
+				{
+					"name": "Novo Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function gerarCPF() {\r",
+									"    let num = Math.floor(Math.random() * 999999999);\r",
+									"    let cpf = num.toString().padStart(9, '0');\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"\r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"function calcularDigito(cpf) {\r",
+									"    let soma = 0;\r",
+									"    for (let i = 0; i < cpf.length; i++) {\r",
+									"        soma += parseInt(cpf[i]) * ((cpf.length + 1) - i);\r",
+									"    }\r",
+									"    let resto = (soma * 10) % 11;\r",
+									"    return (resto > 9) ? '0' : resto.toString();\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"cpf\", gerarCPF());\r",
+									"\r",
+									"function generateRandomPassword() {\r",
+									"  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"  const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+									"  const numbers = '0123456789';\r",
+									"  const allChars = uppercaseChars + lowercaseChars + specialChars + numbers;\r",
+									"\r",
+									"  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];\r",
+									"\r",
+									"  const passwordLength = Math.floor(Math.random() * 5) + 8; // Entre 8 e 12 dígitos\r",
+									"\r",
+									"  const password = [\r",
+									"    getRandomChar(uppercaseChars),\r",
+									"    getRandomChar(lowercaseChars),\r",
+									"    getRandomChar(specialChars),\r",
+									"    getRandomChar(numbers),\r",
+									"    ...Array.from({ length: passwordLength - 4 }, () => getRandomChar(allChars))\r",
+									"  ].sort(() => Math.random() - 0.5).join('');\r",
+									"\r",
+									"  pm.environment.set('password', password);\r",
+									"}\r",
+									"\r",
+									"generateRandomPassword();\r",
+									"\r",
+									"\r",
+									"function generateFullName() {\r",
+									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
+									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"\r",
+									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
+									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
+									"\r",
+									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
+									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"\r",
+									"  pm.environment.set('fullName', fullName);\r",
+									"  pm.environment.set('mailRegister', email);\r",
+									"}\r",
+									"generateFullName();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"mail\": \"{{mailRegister}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{mailRegister}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cadastro Diretoria",
+			"item": [
+				{
+					"name": "Novo cadastro Diretoria",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verifica se 'boardCode' está presente no corpo da resposta\", function () {\r",
+									"    var responseBody = pm.response.text();\r",
+									"    pm.expect(responseBody).to.include('\"boardCode\"');\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"boardId\",pm.variables.replaceIn(JSON.parse(responseBody).newBoard._id));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function generateBoardName() {\r",
+									"    // Array ampliado com nomes criativos de diretorias\r",
+									"    var directorateNames = [\r",
+									"        \"Inovação\", \"Estratégia\", \"Tecnologia\", \"Desenvolvimento\", \"Operações\",\r",
+									"        \"Marketing\", \"Finanças\", \"RecursosHumanos\", \"Comercial\", \"Produção\",\r",
+									"        \"Logística\", \"Qualidade\", \"Pesquisa\", \"Design\", \"Sustentabilidade\",\r",
+									"        \"Educação\", \"Comunicação\", \"Jurídico\", \"Internacional\", \"Digital\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona duas diretorias aleatórias do array\r",
+									"    var randomDirectorate1 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									"    var randomDirectorate2 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									"\r",
+									"    // Combina as diretorias com o caractere especial '&', sem espaços\r",
+									"    var boardName = randomDirectorate1 + \"&\" + randomDirectorate2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (boardName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        boardName = boardName.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return boardName;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável boardName e define como uma variável de ambiente\r",
+									"var boardName = generateBoardName();\r",
+									"pm.environment.set(\"boardName\", boardName); // Define a variável no ambiente\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boardName\": \"{{boardName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cadastro Centro de Custos",
+			"item": [
+				{
+					"name": "Novo Cadastro Centro de Custos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"costCenterId\",pm.variables.replaceIn(JSON.parse(responseBody).newCostCenter._id));\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateCostCenterName() {\r",
+									"    // Array com nomes representativos de centros de custos\r",
+									"    var costCenterNames = [\r",
+									"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+									"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+									"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+									"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois centros de custos aleatórios do array\r",
+									"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"\r",
+									"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+									"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (costCenterName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        costCenterName = costCenterName.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return costCenterName;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+									"var costCenterName = generateCostCenterName();\r",
+									"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Centro de Custos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Centro de Custos por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/658202daa2d3ae70485d9b73",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								"658202daa2d3ae70485d9b73"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inativar Centro de Custos Sem uso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/status/{{costCenterId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								"status",
+								"{{costCenterId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inativar Centro de Custo em Uso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 208\", function () {\r",
+									"    pm.response.to.have.status(208);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/status/658202daa2d3ae70485d9b73",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								"status",
+								"658202daa2d3ae70485d9b73"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Cadastro Centro de Custos para Uso de Departamento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"costCenterId\",pm.variables.replaceIn(JSON.parse(responseBody).newCostCenter._id));\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateCostCenterName() {\r",
+									"    // Array com nomes representativos de centros de custos\r",
+									"    var costCenterNames = [\r",
+									"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+									"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+									"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+									"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois centros de custos aleatórios do array\r",
+									"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"\r",
+									"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+									"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (costCenterName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        costCenterName = costCenterName.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return costCenterName;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+									"var costCenterName = generateCostCenterName();\r",
+									"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cadastro Departamento",
+			"item": [
+				{
+					"name": "Novo Departamento - Happy Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de sucesso esperada\r",
+									"pm.test(\"Verificar mensagem de sucesso\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Cadastro realizado com sucesso.\");\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"departmentId\",pm.variables.replaceIn(JSON.parse(responseBody).newDepartment._id));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - em branco",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - repetido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de alerta esperada\r",
+									"pm.test(\"Verificar mensagem de alerta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.alert).to.eql([\"Não é possível salvar esse registro. Departamento já cadastrado no sistema.\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"*/\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"Segurança&Marketing\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - apenas caracter \"&\"",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql([\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"*/\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"Segurança%Marketing\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - Mais de 50 caracteres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 51 e 60 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(51, 60));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - com 50 caracteres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de sucesso esperada\r",
+									"pm.test(\"Verificar mensagem de sucesso\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Cadastro realizado com sucesso.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(tamanho) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let nameDepartment = ''; // Ajustado o nome da variável aqui\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(50));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - Letras maiúsculas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Apenas letras maiúsculas\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - Letras minúsculas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'abcdefghijklmnopqrstuvwxyz'; // Apenas letras minúsculas\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"departmentName\" - Com números",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let numeros = '0123456789';\r",
+									"    let caracteres = letras + numeros; // Combina letras e números\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"\r",
+									"    // Garante pelo menos um número\r",
+									"    nameDepartment += numeros.charAt(Math.floor(Math.random() * numeros.length));\r",
+									"\r",
+									"    for (let i = 1; i < tamanho; i++) { // Inicia de 1 pois já adicionamos um número\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"\r",
+									"    // Embaralha a string para o número não ficar sempre na primeira posição\r",
+									"    nameDepartment = embaralharString(nameDepartment);\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"function embaralharString(str) {\r",
+									"    let arr = str.split('');\r",
+									"    for (let i = arr.length - 1; i > 0; i--) {\r",
+									"        let j = Math.floor(Math.random() * (i + 1));\r",
+									"        [arr[i], arr[j]] = [arr[j], arr[i]]; // Troca os elementos\r",
+									"    }\r",
+									"    return arr.join('');\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"costCenterId\" em branco",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de erro esperada\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql([\"O campo 'ID do centro de custos' é obrigatório.\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Departamento - campo \"costCenterId\" id não especificado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem desejada\r",
+									"pm.test(\"Verificar mensagem\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Não foi possível encontrar o centro de custos com o id especificado\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"65abc4dfa2d3ae80585ddd1d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Editar Departamento",
+			"item": [
+				{
+					"name": "Novo Departamento - Happy Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de sucesso esperada\r",
+									"pm.test(\"Verificar mensagem de sucesso\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Cadastro realizado com sucesso.\");\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"departmentId\",pm.variables.replaceIn(JSON.parse(responseBody).newDepartment._id));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - Happy Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de sucesso esperada\r",
+									"pm.test(\"Verificar mensagem de sucesso\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Cadastro atualizado com sucesso!\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - em branco",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - repetido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de alerta esperada\r",
+									"pm.test(\"Verificar mensagem de alerta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.alert).to.eql([\"Não é possível salvar esse registro. Departamento já cadastrado no sistema.\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"*/\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"Segurança&Marketing\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento- campo \"departmentName\" - apenas caracter \"&\"",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql([\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"/*function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"*/\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"Segurança%Marketing\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - Mais de 50 caracteres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 51 e 60 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(51, 60));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - com 50 caracteres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(tamanho) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let nameDepartment = ''; // Ajustado o nome da variável aqui\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(50));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - Letras maiúsculas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Apenas letras maiúsculas\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - Letras minúsculas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gerarNomeDepartamento(min, max) {\r",
+									"    let caracteres = 'abcdefghijklmnopqrstuvwxyz'; // Apenas letras minúsculas\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"    for (let i = 0; i < tamanho; i++) {\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"departmentName\" - Com números",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" function gerarNomeDepartamento(min, max) {\r",
+									"    let letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"    let numeros = '0123456789';\r",
+									"    let caracteres = letras + numeros; // Combina letras e números\r",
+									"    let tamanho = Math.floor(Math.random() * (max - min + 1)) + min; // Gera um tamanho aleatório entre min e max\r",
+									"    let nameDepartment = '';\r",
+									"\r",
+									"    // Garante pelo menos um número\r",
+									"    nameDepartment += numeros.charAt(Math.floor(Math.random() * numeros.length));\r",
+									"\r",
+									"    for (let i = 1; i < tamanho; i++) { // Inicia de 1 pois já adicionamos um número\r",
+									"        nameDepartment += caracteres.charAt(Math.floor(Math.random() * caracteres.length));\r",
+									"    }\r",
+									"\r",
+									"    // Embaralha a string para o número não ficar sempre na primeira posição\r",
+									"    nameDepartment = embaralharString(nameDepartment);\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"function embaralharString(str) {\r",
+									"    let arr = str.split('');\r",
+									"    for (let i = arr.length - 1; i > 0; i--) {\r",
+									"        let j = Math.floor(Math.random() * (i + 1));\r",
+									"        [arr[i], arr[j]] = [arr[j], arr[i]]; // Troca os elementos\r",
+									"    }\r",
+									"    return arr.join('');\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman com um tamanho entre 10 e 20 caracteres\r",
+									"pm.environment.set(\"nameDepartment\", gerarNomeDepartamento(10, 20));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"costCenterId\" em branco",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem de erro esperada\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql([\"O campo 'ID do centro de custos' é obrigatório.\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Departamento - campo \"costCenterId\" id não especificado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"// Verifica se a resposta contém a mensagem desejada\r",
+									"pm.test(\"Verificar mensagem\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Não foi possível encontrar o centro de custos com o id especificado\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									"\r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"    var departmentNames = [\r",
+									"        \"Desenvolvimento\", \"Marketing\", \"Vendas\", \"Tecnologia\", \"RecursosHumanos\",\r",
+									"        \"Financeiro\", \"Compras\", \"Operacional\", \"Logística\", \"AtendimentoCliente\",\r",
+									"        \"PesquisaMercado\", \"Design\", \"Qualidade\", \"Estratégia\", \"Jurídico\",\r",
+									"        \"Inovação\", \"Sustentabilidade\", \"Comunicação\", \"RelaçõesPúblicas\", \"Segurança\"\r",
+									"    ];\r",
+									"\r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"\r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									"\r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									"\r",
+									"    return nameDepartment;\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"65abc4dfa2d3ae80585ddd1d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,1800 @@
+{
+	"info": {
+		"_postman_id": "a0debeca-b674-4390-b736-0f87c63f3e91",
+		"name": "Register",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27688809",
+		"_collection_link": "https://lively-comet-905188.postman.co/workspace/The-Originals~84b237fe-737d-4f44-bcb8-196c1c02072d/collection/27688809-a0debeca-b674-4390-b736-0f87c63f3e91?action=share&source=collection_link&creator=27688809"
+	},
+	"item": [
+		{
+			"name": "Login ADMIN",
+			"item": [
+				{
+					"name": "Login ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Novo ADMIN",
+			"item": [
+				{
+					"name": "Novo Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function gerarCPF() {\r",
+									"    let num = Math.floor(Math.random() * 999999999);\r",
+									"    let cpf = num.toString().padStart(9, '0');\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"\r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"function calcularDigito(cpf) {\r",
+									"    let soma = 0;\r",
+									"    for (let i = 0; i < cpf.length; i++) {\r",
+									"        soma += parseInt(cpf[i]) * ((cpf.length + 1) - i);\r",
+									"    }\r",
+									"    let resto = (soma * 10) % 11;\r",
+									"    return (resto > 9) ? '0' : resto.toString();\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"cpf\", gerarCPF());\r",
+									"\r",
+									"function generateRandomPassword() {\r",
+									"  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"  const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+									"  const numbers = '0123456789';\r",
+									"  const allChars = uppercaseChars + lowercaseChars + specialChars + numbers;\r",
+									"\r",
+									"  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];\r",
+									"\r",
+									"  const passwordLength = Math.floor(Math.random() * 5) + 8; // Entre 8 e 12 dígitos\r",
+									"\r",
+									"  const password = [\r",
+									"    getRandomChar(uppercaseChars),\r",
+									"    getRandomChar(lowercaseChars),\r",
+									"    getRandomChar(specialChars),\r",
+									"    getRandomChar(numbers),\r",
+									"    ...Array.from({ length: passwordLength - 4 }, () => getRandomChar(allChars))\r",
+									"  ].sort(() => Math.random() - 0.5).join('');\r",
+									"\r",
+									"  pm.environment.set('password', password);\r",
+									"}\r",
+									"\r",
+									"generateRandomPassword();\r",
+									"\r",
+									"\r",
+									"function generateFullName() {\r",
+									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
+									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"\r",
+									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
+									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
+									"\r",
+									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
+									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"\r",
+									"  pm.environment.set('fullName', fullName);\r",
+									"  pm.environment.set('mailRegister', email);\r",
+									"}\r",
+									"generateFullName();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"mail\": \"{{mailRegister}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{mailRegister}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register (Novo cadastro de login)",
+			"item": [
+				{
+					"name": "Happy Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function gerarCPF() {\r",
+									"    let num = Math.floor(Math.random() * 999999999);\r",
+									"    let cpf = num.toString().padStart(9, '0');\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"    cpf += calcularDigito(cpf);\r",
+									"\r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"function calcularDigito(cpf) {\r",
+									"    let soma = 0;\r",
+									"    for (let i = 0; i < cpf.length; i++) {\r",
+									"        soma += parseInt(cpf[i]) * ((cpf.length + 1) - i);\r",
+									"    }\r",
+									"    let resto = (soma * 10) % 11;\r",
+									"    return (resto > 9) ? '0' : resto.toString();\r",
+									"}\r",
+									"\r",
+									"// Definir a variável no Postman\r",
+									"pm.environment.set(\"cpf\", gerarCPF());\r",
+									"\r",
+									"function generateRandomPassword() {\r",
+									"  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"  const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+									"  const numbers = '0123456789';\r",
+									"  const allChars = uppercaseChars + lowercaseChars + specialChars + numbers;\r",
+									"\r",
+									"  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];\r",
+									"\r",
+									"  const passwordLength = Math.floor(Math.random() * 5) + 8; // Entre 8 e 12 dígitos\r",
+									"\r",
+									"  const password = [\r",
+									"    getRandomChar(uppercaseChars),\r",
+									"    getRandomChar(lowercaseChars),\r",
+									"    getRandomChar(specialChars),\r",
+									"    getRandomChar(numbers),\r",
+									"    ...Array.from({ length: passwordLength - 4 }, () => getRandomChar(allChars))\r",
+									"  ].sort(() => Math.random() - 0.5).join('');\r",
+									"\r",
+									"  pm.environment.set('password', password);\r",
+									"}\r",
+									"\r",
+									"generateRandomPassword();\r",
+									"\r",
+									"\r",
+									"function generateFullName() {\r",
+									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
+									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"\r",
+									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
+									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
+									"\r",
+									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
+									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"\r",
+									"  pm.environment.set('fullName', fullName);\r",
+									"  pm.environment.set('mailRegister', email);\r",
+									"}\r",
+									"generateFullName();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"mail\": \"{{mailRegister}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{password}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty fullName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid fullName format more than 100 characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Abcdefghijklmnopqrstuvwxyzbcdefghijklmnopqrstuvwxyz Abcdefghijklmnopqrstuvwxyzbcdefghijklmnopqrstuvwxy\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid fullName format starting with lowercase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"cristina maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid fullName format fisrtName starting with lowercase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid fullName format lastName starting with lowercase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty mail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid mail format without @",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid mail format without \" . \"",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@globo\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format without special character",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"12345678Ab\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"12345678Ab\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format without lowercase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"12345678A@\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"12345678A@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format without uppercase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"12345678b@\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"12345678b@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format without number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"ABCDEFgh@\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"ABCDEFgh@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format less than 8 characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Te\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Te\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid password format more than 12 characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Isadora Cruz\",\r\n  \"mail\": \"isadoracruz@test.com.br\",\r\n  \"password\": \"Amig@12345678\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"59876543214\",\r\n  \"confirmPassword\": \"Amig@12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty accessProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty cpf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Repeated cpf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678921\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid cpf format only digits",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"1234567891A\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid cpf format more than 11 digits",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"123456789101\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid cpf format less than 11 digits",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"1234567891\",\r\n  \"confirmPassword\": \"1234@Test\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty confirmPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong confirmPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Cristina Maria\",\r\n  \"mail\": \"cristinamaria@test.com.br\",\r\n  \"password\": \"1234@Test\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"12345678912\",\r\n  \"confirmPassword\": \"1234@Tes\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

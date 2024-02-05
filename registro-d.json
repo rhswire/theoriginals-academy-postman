@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "0ed1232b-42b9-43fe-9af7-17d19d402804",
+		"name": "config-D",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27630415",
+		"_collection_link": "https://planetary-zodiac-829770.postman.co/workspace/The-Originals~b0b7a5e1-fed1-42fc-be24-989204af3fd5/collection/27630415-0ed1232b-42b9-43fe-9af7-17d19d402804?action=share&source=collection_link&creator=27630415"
+	},
+	"item": [
+		{
+			"name": "Login - admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"Token\", JSON.parse(responseBody).token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mail\": \"{{MailAdmin}}\",\r\n  \"password\": \"{{PasswordAdmin}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/login/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,902 @@
+{
+	"info": {
+		"_postman_id": "f24d56d2-d6c6-40a4-b0a9-6b6c6a953b14",
+		"name": "editardiretoria-D",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27630415",
+		"_collection_link": "https://planetary-zodiac-829770.postman.co/workspace/The-Originals~b0b7a5e1-fed1-42fc-be24-989204af3fd5/collection/27630415-f24d56d2-d6c6-40a4-b0a9-6b6c6a953b14?action=share&source=collection_link&creator=27630415"
+	},
+	"item": [
+		{
+			"name": "Happy Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"Diretoria\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Characters max 51",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"cinquentaeumcaracterescinquentaeumcaracterescinquen\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Characters 50",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"cinquentacaracterescinquentacaracterescinquentacal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Repeated",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"Diretoria\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Only with numbers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"484848454845\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Numbers, letters, special character &",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"15Ln&\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "with letters and special characters minus &",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"Direto#\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "with space",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"Operações & perações\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "only capital letters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"DIRETORIOL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "only lowercase letters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"opeoa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "special character only",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"&&&\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return of the Board Code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"retorno do odigo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"mudr\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/656e4d1d96d67959d0cc6861",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"656e4d1d96d67959d0cc6861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change name - empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/656e4d1d96d67959d0cc6861",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"656e4d1d96d67959d0cc6861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change name -Only with numbers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"898986465\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/656e4d1d96d67959d0cc6861",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"656e4d1d96d67959d0cc6861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change name - Numbers, letters, special character &",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"MUAR12345&\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/656e4d1d96d67959d0cc6861",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"656e4d1d96d67959d0cc6861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change name - letter, special character &",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"boardName\": \"MUDAR&udar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/656e4d1d96d67959d0cc6861",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"656e4d1d96d67959d0cc6861"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar se a resposta tem status 200 (OK)\r",
+							"pm.test(\"Status da resposta deve ser 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verificar se a resposta é um JSON válido\r",
+							"pm.test(\"A resposta deve ser um JSON válido\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// Verificar se a resposta contém uma lista não vazia\r",
+							"pm.test(\"A lista não deve estar vazia\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/board/count",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search directories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar se a resposta tem status 200 (OK)\r",
+							"pm.test(\"Status da resposta deve ser 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verificar se a resposta é um JSON válido\r",
+							"pm.test(\"A resposta deve ser um JSON válido\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// Verificar se a resposta contém resultados relacionados à pesquisa\r",
+							"pm.test(\"A resposta deve conter resultados relacionados à pesquisa\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"resultados\");\r",
+							"    pm.expect(jsonData.resultados.length).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/board/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"board",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "query",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{Token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

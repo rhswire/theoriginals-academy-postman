@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "63b6bea7-ecb2-4730-a894-1da1a9662bda",
+		"name": "incluirccusto-D",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27630415",
+		"_collection_link": "https://planetary-zodiac-829770.postman.co/workspace/The-Originals~b0b7a5e1-fed1-42fc-be24-989204af3fd5/collection/27630415-63b6bea7-ecb2-4730-a894-1da1a9662bda?action=share&source=collection_link&creator=27630415"
+	},
+	"item": [
+		{
+			"name": "01-Be Happy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script in Postman\r",
+							"\r",
+							"function generateCostCenterName() {\r",
+							"    // Array com nomes representativos de centros de custos\r",
+							"    var costCenterNames = [\r",
+							"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+							"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+							"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+							"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+							"    ];\r",
+							"\r",
+							"    // Seleciona dois centros de custos aleatórios do array\r",
+							"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"\r",
+							"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+							"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+							"\r",
+							"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+							"    if (costCenterName.length > 50) {\r",
+							"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+							"        costCenterName = costCenterName.substring(0, 50);\r",
+							"    }\r",
+							"\r",
+							"    return costCenterName;\r",
+							"}\r",
+							"\r",
+							"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+							"var costCenterName = generateCostCenterName();\r",
+							"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://the-originals.qacoders-academy.com.br/api/costCenter/",
+					"protocol": "https",
+					"host": [
+						"the-originals",
+						"qacoders-academy",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"costCenter",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04-Empry board ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script in Postman\r",
+							"\r",
+							"function generateCostCenterName() {\r",
+							"    // Array com nomes representativos de centros de custos\r",
+							"    var costCenterNames = [\r",
+							"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+							"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+							"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+							"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+							"    ];\r",
+							"\r",
+							"    // Seleciona dois centros de custos aleatórios do array\r",
+							"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"\r",
+							"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+							"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+							"\r",
+							"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+							"    if (costCenterName.length > 50) {\r",
+							"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+							"        costCenterName = costCenterName.substring(0, 50);\r",
+							"    }\r",
+							"\r",
+							"    return costCenterName;\r",
+							"}\r",
+							"\r",
+							"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+							"var costCenterName = generateCostCenterName();\r",
+							"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \" \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://the-originals.qacoders-academy.com.br/api/costCenter/",
+					"protocol": "https",
+					"host": [
+						"the-originals",
+						"qacoders-academy",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"costCenter",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03- change cancellation- Ñ CANCELA",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script in Postman\r",
+							"\r",
+							"function generateCostCenterName() {\r",
+							"    // Array com nomes representativos de centros de custos\r",
+							"    var costCenterNames = [\r",
+							"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+							"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+							"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+							"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+							"    ];\r",
+							"\r",
+							"    // Seleciona dois centros de custos aleatórios do array\r",
+							"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"\r",
+							"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+							"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+							"\r",
+							"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+							"    if (costCenterName.length > 50) {\r",
+							"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+							"        costCenterName = costCenterName.substring(0, 50);\r",
+							"    }\r",
+							"\r",
+							"    return costCenterName;\r",
+							"}\r",
+							"\r",
+							"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+							"var costCenterName = generateCostCenterName();\r",
+							"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Teste de Cancelamento de Alteração\r",
+							"\r",
+							"// Passo 1: Realize uma edição bem-sucedida\r",
+							"// (Execute a solicitação de edição com dados diferentes)\r",
+							"\r",
+							"// Armazene o nome do centro de custos antes da edição\r",
+							"const originalCostCenterName = pm.environment.get(\"Exportação&Operações\");\r",
+							"\r",
+							"// Armazene o boardId\r",
+							"const boardId = pm.environment.get(\"65bd7991a2d3ae70485dfcb5\");\r",
+							"\r",
+							"// Passo 2: Envie uma solicitação para cancelar as alterações\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://the-originals.qacoders-academy.com.br/api/costCenter/', // Substitua pela URL real de cancelamento\r",
+							"    method: 'POST', // Substitua pelo método HTTP real de cancelamento (pode ser POST, PUT, etc.)\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json',\r",
+							"        // Adicione quaisquer outros cabeçalhos necessários\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            \"Exportação&Operações\": originalCostCenterName, // Volte ao nome original\r",
+							"            \"65bd7991a2d3ae70485dfcb5\": boardId // Use o mesmo boardId\r",
+							"        })\r",
+							"    }\r",
+							"}, (response) => {\r",
+							"    // Passo 3: Verifique se o código de resposta é 200 ou outro código de sucesso especificado\r",
+							"    pm.test(\"Cancelamento de Alteração - Código de Resposta\", () => {\r",
+							"        pm.response.to.have.status(201); // Substitua pelo código de sucesso esperado\r",
+							"    });\r",
+							"\r",
+							"    // Passo 4: Verifique se os dados do centro de custos permanecem inalterados\r",
+							"    pm.test(\"Cancelamento de Alteração - Dados Inalterados\", () => {\r",
+							"        const responseBody = pm.response.json();\r",
+							"        pm.expect(responseBody.costCenterName).to.eql(originalCostCenterName);\r",
+							"        // Adicione verificações para outros campos, se necessário\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://the-originals.qacoders-academy.com.br/api/costCenter/",
+					"protocol": "https",
+					"host": [
+						"the-originals",
+						"qacoders-academy",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"costCenter",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02-Change Confirmation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script in Postman\r",
+							"\r",
+							"function generateCostCenterName() {\r",
+							"    // Array com nomes representativos de centros de custos\r",
+							"    var costCenterNames = [\r",
+							"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+							"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+							"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+							"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+							"    ];\r",
+							"\r",
+							"    // Seleciona dois centros de custos aleatórios do array\r",
+							"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"\r",
+							"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+							"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+							"\r",
+							"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+							"    if (costCenterName.length > 50) {\r",
+							"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+							"        costCenterName = costCenterName.substring(0, 50);\r",
+							"    }\r",
+							"\r",
+							"    return costCenterName;\r",
+							"}\r",
+							"\r",
+							"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+							"var costCenterName = generateCostCenterName();\r",
+							"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Armazene o novo nome do centro de custos após a edição\r",
+							"const editedCostCenterName = pm.environment.get(\"Importação&Financeiro\");\r",
+							"\r",
+							"// Armazene o boardId\r",
+							"const boardId = pm.environment.get(\"65bd7991a2d3ae70485dfcb5\");\r",
+							"\r",
+							"// Passo 2: Envie uma solicitação para confirmar as alterações\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://the-originals.qacoders-academy.com.br/api/costCenter/', // Substitua pela URL real de confirmação\r",
+							"    method: 'POST', // Substitua pelo método HTTP real de confirmação (pode ser POST, PUT, etc.)\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json',\r",
+							"        // Adicione quaisquer outros cabeçalhos necessários\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            \"Importação&Financeiro\": editedCostCenterName, // Use o novo nome após a edição\r",
+							"            \"65bd7991a2d3ae70485dfcb5\": boardId // Use o mesmo boardId\r",
+							"        })\r",
+							"    }\r",
+							"}, (response) => {\r",
+							"    // Passo 3: Verifique se o código de resposta é 200 ou outro código de sucesso especificado\r",
+							"    pm.test(\"Confirmação de Alteração - Código de Resposta\", () => {\r",
+							"        pm.response.to.have.status(201); // Substitua pelo código de sucesso esperado\r",
+							"    });\r",
+							"\r",
+							"    // Passo 4: Verifique se os dados do centro de custos foram alterados corretamente\r",
+							"    pm.test(\"Confirmação de Alteração - Dados Alterados\", () => {\r",
+							"        const responseBody = pm.response.json();\r",
+							"        pm.expect(responseBody.costCenterName).to.eql(editedCostCenterName);\r",
+							"        // Adicione verificações para outros campos, se necessário\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://the-originals.qacoders-academy.com.br/api/costCenter/",
+					"protocol": "https",
+					"host": [
+						"the-originals",
+						"qacoders-academy",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"costCenter",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04-Empry Center Name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Pre-request Script in Postman\r",
+							"\r",
+							"function generateCostCenterName() {\r",
+							"    // Array com nomes representativos de centros de custos\r",
+							"    var costCenterNames = [\r",
+							"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+							"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+							"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+							"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+							"    ];\r",
+							"\r",
+							"    // Seleciona dois centros de custos aleatórios do array\r",
+							"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+							"\r",
+							"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+							"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+							"\r",
+							"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+							"    if (costCenterName.length > 50) {\r",
+							"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+							"        costCenterName = costCenterName.substring(0, 50);\r",
+							"    }\r",
+							"\r",
+							"    return costCenterName;\r",
+							"}\r",
+							"\r",
+							"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+							"var costCenterName = generateCostCenterName();\r",
+							"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{Token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"costCenterName\": \" \",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://the-originals.qacoders-academy.com.br/api/costCenter/",
+					"protocol": "https",
+					"host": [
+						"the-originals",
+						"qacoders-academy",
+						"com",
+						"br"
+					],
+					"path": [
+						"api",
+						"costCenter",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

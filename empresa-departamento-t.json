@@ -1,0 +1,659 @@
+{
+	"info": {
+		"_postman_id": "503f7c1a-ce1a-408b-b143-8778ebe4de08",
+		"name": "06 - Entrega Final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30861529"
+	},
+	"item": [
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "Login - admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Como o Token expira a cada 24 horas, fazendo isso ela é gerado automaticamente a cada requisição mesmo após o prazo. \"Token\" é o nome dado a variavel. E depois é onde o valor do token será salvo.\r",
+									"pm.globals.set(\"Token\", JSON.parse(responseBody).token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Street - Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									" \r",
+									"\r",
+									" \r",
+									" \r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Criar cep\r",
+									"function generateZipCode() {\r",
+									"    let zipCode = '';\r",
+									" \r",
+									"    for (let i = 0; i < 8; i++) {\r",
+									"        zipCode += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+									"    }\r",
+									" \r",
+									"    return zipCode;\r",
+									"}\r",
+									" \r",
+									"let zipCode = generateZipCode();\r",
+									"pm.environment.set(\"zipCode\", zipCode);\r",
+									"\r",
+									"\r",
+									"//---------------------------\r",
+									"//Criar Cidade e Estado, Bairro e Rua\r",
+									"function generateLocationData() {\r",
+									"    const locationData = {\r",
+									"        \"SP\": {\r",
+									"            \"São Paulo\": {\r",
+									"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
+									"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+									"            },\r",
+									"            \"Campinas\": {\r",
+									"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",
+									"                \"streets\": [\"Rua José Paulino\", \"Av Aquidaban\", \"Rua Barreto Leme\", \"Av Orozimbo Maia\", \"Rua Dr Moraes Sales\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"RJ\": {\r",
+									"            \"Rio de Janeiro\": {\r",
+									"                \"districts\": [\"Copacabana\", \"Leblon\", \"Ipanema\", \"Botafogo\", \"Flamengo\"],\r",
+									"                \"streets\": [\"Av Atlântica\", \"Rua Visconde de Pirajá\", \"Av Nossa Sra. de Copacabana\", \"Rua Barata Ribeiro\", \"Rua Farme de Amoedo\"]\r",
+									"            },\r",
+									"            \"Niterói\": {\r",
+									"                \"districts\": [\"Icaraí\", \"São Francisco\", \"Charitas\", \"Santa Rosa\", \"Itaipu\"],\r",
+									"                \"streets\": [\"Rua Gavião Peixoto\", \"Av Quintino Bocaiúva\", \"Rua Mem de Sá\", \"Rua Mariz e Barros\", \"Rua Lopes Trovão\"]\r",
+									"            },\r",
+									"        },\r",
+									"     \"MG\": {\r",
+									"            \"Belo Horizonte\": {\r",
+									"                \"districts\": [\"Pampulha\", \"Savassi\", \"Lourdes\", \"Venda Nova\", \"Barreiro\"],\r",
+									"                \"streets\": [\"Av Afonso Pena\", \"Rua da Bahia\", \"Av Amazonas\", \"Rua Guaicuí\", \"Av do Contorno\"]\r",
+									"            },\r",
+									"            \"Uberlândia\": {\r",
+									"                \"districts\": [\"Santa Mônica\", \"Fundinho\", \"Cidade Jardim\", \"Brasil\", \"Umuarama\"],\r",
+									"                \"streets\": [\"Av Rondon Pacheco\", \"Av João Naves de Ávila\", \"Rua Olegário Maciel\", \"Av Floriano Peixoto\", \"Rua Duque de Caxias\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"BA\": {\r",
+									"            \"Salvador\": {\r",
+									"                \"districts\": [\"Barra\", \"Pituba\", \"Itapuã\", \"Brotas\", \"Caminho das Árvores\"],\r",
+									"                \"streets\": [\"Av Sete de Setembro\", \"Av ACM\", \"Av Paralela\", \"Rua das Hortênsias\", \"Rua Marquês de Caravelas\"]\r",
+									"            },\r",
+									"            \"Feira de Santana\": {\r",
+									"                \"districts\": [\"Centro\", \"Santa Mônica\", \"Capuchinhos\", \"Cidade Nova\", \"Kalilândia\"],\r",
+									"                \"streets\": [\"Rua JJ Seabra\", \"Av Getúlio Vargas\", \"Rua Marechal Deodoro\", \"Rua Carlos Valadares\", \"Rua Barão de Cotegipe\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"PR\": {\r",
+									"            \"Curitiba\": {\r",
+									"                \"districts\": [\"Batel\", \"Centro\", \"Alto da XV\", \"Água Verde\", \"Boa Vista\"],\r",
+									"                \"streets\": [\"Av do Batel\", \"Rua XV de Novembro\", \"Rua Mateus Leme\", \"Av Iguaçu\", \"Rua Holanda\"]\r",
+									"            },\r",
+									"            \"Londrina\": {\r",
+									"                \"districts\": [\"Centro\", \"Gleba Palhano\", \"Jardim Higienópolis\", \"Terra Bonita\", \"Jardim Shangri-La\"],\r",
+									"                \"streets\": [\"Av Higienópolis\", \"Rua Paranaguá\", \"Av Maringá\", \"Rua Sergipe\", \"Av Tiradentes\"]\r",
+									"            },\r",
+									"        }\r",
+									"    };\r",
+									" \r",
+									"    // Escolhe um estado aleatoriamente\r",
+									"    const states = Object.keys(locationData);\r",
+									"    const randomState = states[Math.floor(Math.random() * states.length)];\r",
+									" \r",
+									"    // Escolhe uma cidade aleatoriamente dentro do estado selecionado\r",
+									"    const cities = Object.keys(locationData[randomState]);\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									" \r",
+									"    // Escolhe um bairro e uma rua aleatoriamente dentro da cidade selecionada\r",
+									"    const randomDistrict = locationData[randomState][randomCity].districts[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].districts.length)\r",
+									"    ];\r",
+									"    const randomStreet = locationData[randomState][randomCity].streets[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].streets.length)\r",
+									"    ];\r",
+									" \r",
+									"    return { state: randomState, city: randomCity, district: randomDistrict, street: randomStreet };\r",
+									"}\r",
+									" \r",
+									"let { state, city, district, street } = generateLocationData();\r",
+									"pm.environment.set(\"state\", state);\r",
+									"pm.environment.set(\"city\", city);\r",
+									"pm.environment.set(\"district\", district);\r",
+									"pm.environment.set(\"street\", street);\r",
+									"\r",
+									"//Gerar número aleatório\r",
+									"function generateRandomNumber() {\r",
+									"    const maxNumber = 9999999999; // Número máximo com 10 dígitos\r",
+									"    return Math.floor(Math.random() * (maxNumber + 1)).toString(); // Gera um número aleatório entre 0 e 9999999999\r",
+									"}\r",
+									" \r",
+									"let number = generateRandomNumber();\r",
+									"pm.environment.set(\"number\", number);\r",
+									" \r",
+									"//Criar um complemento aleatório\r",
+									"function generateAddressComplement() {\r",
+									"    const complementTypes = [\"Apartamento\", \"Bloco\", \"Sala\", \"Lote\", \"Andar\"];\r",
+									"    const complement = complementTypes[Math.floor(Math.random() * complementTypes.length)];\r",
+									" \r",
+									"    let complementNumber;\r",
+									"    if (complement === \"Bloco\") {\r",
+									"        // Para \"Bloco\", usar letras\r",
+									"        const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+									"        complementNumber = letters.charAt(Math.floor(Math.random() * letters.length));\r",
+									"    } else {\r",
+									"        // Para os outros tipos, usar números\r",
+									"        complementNumber = Math.floor(Math.random() * 100).toString();\r",
+									"    }\r",
+									" \r",
+									"    return `${complement} ${complementNumber}`;\r",
+									"}\r",
+									" \r",
+									"let complement = generateAddressComplement();\r",
+									"pm.environment.set(\"complement\", complement);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/company/address/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"company",
+								"address",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Obtenha o valor atual da variável status do ambiente\r",
+									"var currentStatus = pm.environment.get(\"status\");\r",
+									"\r",
+									"// Converte o valor da variável status para boolean\r",
+									"currentStatus = currentStatus === 'true';\r",
+									"\r",
+									"// Inverte o valor do status\r",
+									"var newStatus = !currentStatus;\r",
+									"\r",
+									"// Atualiza a variável status no ambiente Postman\r",
+									"pm.environment.set(\"status\", newStatus.toString());\r",
+									"\r",
+									"// Atualiza o corpo da solicitação com o novo valor do status\r",
+									"pm.request.body.raw = JSON.stringify({ \"status\": newStatus });\r",
+									"\r",
+									"// Defina o cabeçalho 'Content-Type' para 'application/json'\r",
+									"pm.request.headers.add({\r",
+									"    key: 'Content-Type',\r",
+									"    value: 'application/json'\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": {{status}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/company/status/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"company",
+								"status",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Departamento",
+			"item": [
+				{
+					"name": "Login - admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Como o Token expira a cada 24 horas, fazendo isso ela é gerado automaticamente a cada requisição mesmo após o prazo. \"Token\" é o nome dado a variavel. E depois é onde o valor do token será salvo.\r",
+									"pm.globals.set(\"Token\", JSON.parse(responseBody).token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Department - Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inactivate Department by ID -  Success",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Obtenha o valor atual da variável status do ambiente\r",
+									"var currentStatus = pm.environment.get(\"statusdep\");\r",
+									"\r",
+									"// Converte o valor da variável status para boolean\r",
+									"currentStatus = currentStatus === 'true';\r",
+									"\r",
+									"// Inverte o valor do status\r",
+									"var newStatus = !currentStatus;\r",
+									"\r",
+									"// Atualiza a variável status no ambiente Postman\r",
+									"pm.environment.set(\"statusdep\", newStatus.toString());\r",
+									"\r",
+									"// Atualiza o corpo da solicitação com o novo valor do status\r",
+									"pm.request.body.raw = JSON.stringify({ \"statusdep\": newStatus });\r",
+									"\r",
+									"// Defina o cabeçalho 'Content-Type' para 'application/json'\r",
+									"pm.request.headers.add({\r",
+									"    key: 'Content-Type',\r",
+									"    value: 'application/json'\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": {{statusdep}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/status/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"status",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

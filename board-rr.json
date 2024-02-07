@@ -8,10 +8,10 @@
 	},
 	"item": [
 		{
-			"name": "Login ADMIN",
+			"name": "Login ADMIN Qa.Coders",
 			"item": [
 				{
-					"name": "Login ADMIN",
+					"name": "Login ADMIN Qa.Coders",
 					"event": [
 						{
 							"listen": "test",
@@ -65,12 +65,14 @@
 			"name": "Login Novo ADMIN",
 			"item": [
 				{
-					"name": "Novo Admin",
+					"name": "Criar Novo Admin",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.environment.set(\"userId\",pm.variables.replaceIn(JSON.parse(responseBody).user._id));\r",
+									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});"
@@ -129,23 +131,53 @@
 									"generateRandomPassword();\r",
 									"\r",
 									"\r",
+									"function removerAcentos(str) {\r",
+									"  return str.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\");\r",
+									"}\r",
+									"\r",
 									"function generateFullName() {\r",
-									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
-									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"  const names = [\r",
+									"    \"Amelia\", \"Bernardo\", \"Cecilia\", \"Dante\", \"Elisa\", \"Fernando\", \"Giovanna\", \"Hugo\",\r",
+									"    \"Íris\", \"João\", \"Larissa\", \"Matheus\", \"Nícolas\", \"Otávio\", \"Patrícia\", \"Quentin\",\r",
+									"    \"Renata\", \"Sofia\", \"Thiago\", \"Valentina\", \"Yasmin\", \"Zacarias\", \"Luna\", \"Enzo\",\r",
+									"    \"Vitória\", \"Ricardo\", \"Mariana\", \"Lucas\", \"Beatriz\", \"Eduardo\", \"Camila\", \"Gabriel\",\r",
+									"    \"Helena\", \"Ian\", \"Jade\", \"Kaique\", \"Lorena\", \"Miguel\", \"Natalia\", \"Oliver\",\r",
+									"    \"Pietra\", \"Quezia\", \"Raul\", \"Stella\", \"Tales\", \"Ursula\", \"Vinicius\", \"Wendy\", \"Xavier\",\r",
+									"    \"Yuri\", \"Agatha\", \"Bruno\", \"Carla\", \"Diego\", \"Elaine\", \"Fábio\", \"Gisele\", \"Heitor\",\r",
+									"    \"Ingrid\", \"Júlio\", \"Karina\", \"Léo\", \"Mirella\", \"Nilo\", \"Oscar\", \"Priscila\",\r",
+									"    \"Quirino\", \"Rosa\", \"Sérgio\", \"Tânia\", \"Ulisses\", \"Vera\", \"Walter\", \"Xênia\",\r",
+									"    \"Yago\", \"Zilda\", \"Álvaro\", \"Érica\", \"Ígor\", \"Óliver\", \"Úrsula\", \"Caio\",\r",
+									"    \"Daniela\", \"Estevan\", \"Fernanda\", \"Gustavo\", \"Hilda\", \"Ítalo\", \"Janaína\",\r",
+									"    \"Kleber\", \"Lívia\", \"Marcio\", \"Nádia\", \"Orlando\", \"Paloma\", \"Roberto\",\r",
+									"    \"Sílvia\", \"Tadeu\", \"Ubaldo\", \"Viviane\", \"Wilson\"\r",
+									"  ];\r",
+									"  \r",
+									"  const surnames = [\r",
+									"    \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\", \"Fernandes\", \"Almeida\", \"Costa\",\r",
+									"    \"Teixeira\", \"Martins\", \"Lima\", \"Mendonça\", \"Nunes\", \"Carvalho\", \"Melo\", \"Cardoso\",\r",
+									"    \"Pires\", \"Jesus\", \"Araújo\", \"Ribeiro\", \"Nascimento\", \"Lopes\", \"Marques\", \"Rocha\",\r",
+									"    \"Alves\", \"Monteiro\", \"Neves\", \"Barros\", \"Moura\", \"Dias\", \"Ferreira\", \"Silveira\",\r",
+									"    \"Gomes\", \"Magalhães\", \"Cruz\", \"Castro\", \"Siqueira\", \"Moraes\", \"Barbosa\", \"Pereira\",\r",
+									"    \"Andrade\", \"Leite\", \"Henrique\", \"Guimarães\", \"Freitas\", \"Viana\", \"Brito\", \"Sales\",\r",
+									"    \"Peixoto\", \"Farias\", \"Albuquerque\", \"Barbieri\", \"Cavalcanti\", \"Dumont\", \"Espíndola\",\r",
+									"    \"Figueiredo\", \"Goulart\", \"Holanda\", \"Izabel\", \"Jardim\", \"Krause\", \"Lacerda\", \"Macedo\",\r",
+									"    \"Nogueira\", \"Oliveira\", \"Pacheco\", \"Queiroz\", \"Rezende\", \"Salazar\", \"Torres\", \"Uchoa\",\r",
+									"    \"Vasconcelos\", \"Werneck\", \"Ximenes\", \"Yamada\", \"Zanetti\", \"Andrade\", \"Braga\", \"Camargo\",\r",
+									"    \"Drumond\", \"Esteves\", \"Fontes\", \"Guimarães\", \"Haddad\", \"Ibrahim\", \"Jacinto\", \"Kubitschek\",\r",
+									"    \"Lemos\", \"Moraes\", \"Navarro\", \"Otero\", \"Pimentel\", \"Quintana\", \"Rangel\", \"Sampaio\",\r",
+									"    \"Tavares\", \"Urbano\", \"Vieira\", \"Watanabe\"\r",
+									"  ];\r",
 									"\r",
 									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
 									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
 									"\r",
 									"  const fullName = `${randomFirstName} ${randomLastName}`;\r",
-									"  const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`;\r",
+									"  const email = `${removerAcentos(randomFirstName.toLowerCase())}.${removerAcentos(randomLastName.toLowerCase())}@example.com`;\r",
 									"\r",
 									"  pm.environment.set('fullName', fullName);\r",
 									"  pm.environment.set('mailRegister', email);\r",
 									"}\r",
-									"generateFullName();\r",
-									"\r",
-									"\r",
-									""
+									"generateFullName();"
 								],
 								"type": "text/javascript"
 							}
@@ -294,15 +326,11 @@
 							"script": {
 								"exec": [
 									"function generateBoardName() {\r",
-									"  const boardNames = [\r",
-									"    \"Distribuição\",\r",
-									"    \"Negócios\",\r",
-									"    \"Entregas\",\r",
-									"    \"Marketing\",\r",
-									"    \"Finanças\",\r",
+									"  const boardNamesPart1 = [\r",
+									"    \"Administração\",\r",
 									"    \"Tecnologia\",\r",
 									"    \"Recursos Humanos\",\r",
-									"    \"Vendas\",\r",
+									"    \"Marketing\",\r",
 									"    \"Operações\",\r",
 									"    \"Desenvolvimento\",\r",
 									"    \"Logística\",\r",
@@ -319,98 +347,81 @@
 									"    \"Engenharia\",\r",
 									"    \"Comunicação\",\r",
 									"    \"Produção\",\r",
-									"    \"Pesquisa e Desenvolvimento\",\r",
-									"    \"Design\",\r",
-									"    \"Sustentabilidade\",\r",
-									"    \"Assuntos Corporativos\",\r",
-									"    \"Gestão de Produtos\",\r",
-									"    \"Administração\",\r",
-									"    \"Assuntos Governamentais\",\r",
-									"    \"Assuntos Internacionais\",\r",
-									"    \"Educação Corporativa\",\r",
-									"    \"TI\",\r",
-									"    \"Segurança\",\r",
-									"    \"Planejamento\",\r",
-									"    \"Relações com Investidores\",\r",
-									"    \"Assuntos Ambientais\",\r",
-									"    \"Saúde e Segurança no Trabalho\",\r",
-									"    \"Contabilidade\",\r",
-									"    \"Controle de Qualidade\",\r",
+									"    \"Financeiro\",\r",
+									"    \"Vendas\",\r",
 									"    \"Gerenciamento de Projetos\",\r",
 									"    \"Treinamento e Desenvolvimento\",\r",
-									"    \"Marketing Digital\",\r",
-									"    \"Inovação e Tecnologia\",\r",
-									"    \"Expansão de Mercado\",\r",
-									"    \"Comunicação Interna\",\r",
-									"    \"Comunicação Externa\",\r",
-									"    \"Gestão de Crises\",\r",
-									"    \"Estratégias de Vendas\",\r",
-									"    \"Desenvolvimento de Produto\",\r",
-									"    \"Gestão de Fornecedores\",\r",
-									"    \"Desenvolvimento de Mercado\",\r",
-									"    \"Assuntos Regulatórios\",\r",
-									"    \"Aquisições e Fusões\",\r",
-									"    \"Gestão de Riscos\",\r",
-									"    \"Relações Estratégicas\",\r",
-									"    \"Parcerias de Negócios\",\r",
-									"    \"Assuntos de TI\",\r",
-									"    \"Desenvolvimento de Marca\",\r",
-									"    \"Planejamento Estratégico\",\r",
-									"    \"Operações Financeiras\",\r",
-									"    \"Relações de Consumidores\",\r",
-									"    \"Gestão de Ativos\",\r",
-									"    \"Estratégias de Expansão\",\r",
-									"    \"Gestão de Portfólio\",\r",
-									"    \"Assuntos de Sustentabilidade\",\r",
-									"    \"Marketing de Conteúdo\",\r",
-									"    \"Gestão de Talentos\",\r",
-									"    \"Gestão de Projetos de TI\",\r",
-									"    \"Assuntos de Ética\",\r",
-									"    \"Gestão de Instalações\",\r",
-									"    \"Gestão de Dados\",\r",
-									"    \"Gestão de Qualidade Total\",\r",
-									"    \"Gestão de Eventos\",\r",
-									"    \"Estratégias de Exportação\",\r",
-									"    \"Gestão de Redes Sociais\",\r",
-									"    \"Assuntos de Privacidade\",\r",
-									"    \"Inovação em Produto\",\r",
-									"    \"Assuntos de Segurança Cibernética\",\r",
-									"    \"Gestão de Operações Globais\",\r",
-									"    \"Gestão de Reciclagem\",\r",
-									"    \"Estratégias de Mercado Emergente\",\r",
-									"    \"Gestão de Investimentos\",\r",
-									"    \"Assuntos de Cidadania Corporativa\",\r",
-									"    \"Estratégias de E-commerce\",\r",
-									"    \"Gestão de Resíduos\",\r",
-									"    \"Gestão de Propriedade Intelectual\",\r",
-									"    \"Assuntos de Propaganda\",\r",
-									"    \"Gestão de Estratégia de Marca\",\r",
-									"    \"Estratégias de Comércio Internacional\",\r",
-									"    \"Gestão de Marketing de Produto\",\r",
-									"    \"Assuntos de Satisfação do Cliente\",\r",
-									"    \"Estratégias de Inovação de Processos\",\r",
-									"    \"Gestão de Transporte\",\r",
-									"    \"Gestão de Mídia\",\r",
-									"    \"Estratégias de Publicidade\",\r",
-									"    \"Assuntos de Diversidade e Inclusão\",\r",
-									"    \"Estratégias de Eficácia de Vendas\",\r",
-									"    \"Gestão de Conformidade Regulatória\",\r",
-									"    \"Assuntos de Energia Sustentável\",\r",
-									"    \"Gestão de Cadeia de Suprimentos\",\r",
-									"    \"Estratégias de Desenvolvimento de Produto\",\r",
-									"    \"Gestão de Qualidade de Produto\",\r",
-									"    \"Assuntos de Responsabilidade Social Corporativa\",\r",
-									"    \"Gestão de Inovação de Produtos\",\r",
-									"    \"Estratégias de Marketing de Conteúdo\",\r",
-									"    \"Gestão de Comunicação Interna\",\r",
+									"    \"Assuntos Ambientais\",\r",
 									"  ];\r",
 									"\r",
-									"  const randomBoardName = boardNames[Math.floor(Math.random() * boardNames.length)];\r",
+									"  const boardNamesPart2 = [\r",
+									"    \"& Finanças\",\r",
+									"    \"Corporativa\",\r",
+									"    \"& Tecnologia\",\r",
+									"    \"& Operacional\",\r",
+									"    \"& Recursos Humanos\",\r",
+									"    \"& Marketing\",\r",
+									"    \"& Inovação\",\r",
+									"    \"& Desenvolvimento\",\r",
+									"    \"& Logística\",\r",
+									"    \"& Estratégia\",\r",
+									"    \"& Legal\",\r",
+									"    \"& Qualidade\",\r",
+									"    \"& Comunicação\",\r",
+									"    \"& Projetos\",\r",
+									"    \"& Clientes\",\r",
+									"    \"& Suporte\",\r",
+									"    \"& Engenharia\",\r",
+									"    \"& Produção\",\r",
+									"    \"& Compras\",\r",
+									"    \"& Relações Públicas\",\r",
+									"    \"& Negócios\",\r",
+									"    \"& Sustentabilidade\",\r",
+									"    \"& Qualidade Total\",\r",
+									"    \"& Aquisições e Fusões\",\r",
+									"  ];\r",
+									"\r",
+									"  const boardNamesPart3 = [\r",
+									"    \" Global\",\r",
+									"    \" Corporativa\",\r",
+									"    \" Estratégico\",\r",
+									"    \" Interno\",\r",
+									"    \" Externo\",\r",
+									"    \" Sênior\",\r",
+									"    \" Junior\",\r",
+									"    \" de Mercado\",\r",
+									"    \" de Produto\",\r",
+									"    \" Digital\",\r",
+									"    \" Internacional\",\r",
+									"    \" Nacional\",\r",
+									"    \" Regional\",\r",
+									"    \" de Vendas\",\r",
+									"    \" de TI\",\r",
+									"    \" de Marketing\",\r",
+									"    \" de Desenvolvimento\",\r",
+									"    \" de Qualidade\",\r",
+									"    \" de Projetos\",\r",
+									"    \" de Engenharia\",\r",
+									"    \" de Produção\",\r",
+									"    \" de Compras\",\r",
+									"    \" de Operações\",\r",
+									"    \" de Negócios\",\r",
+									"    \" de Logística\",\r",
+									"  ];\r",
+									"\r",
+									"  const randomBoardName =\r",
+									"    boardNamesPart1[Math.floor(Math.random() * boardNamesPart1.length)] +\r",
+									"    \" \" +\r",
+									"    boardNamesPart2[Math.floor(Math.random() * boardNamesPart2.length)] +\r",
+									"    \" \" +\r",
+									"    boardNamesPart3[Math.floor(Math.random() * boardNamesPart3.length)];\r",
 									"\r",
 									"  pm.environment.set('boardName', randomBoardName);\r",
 									"}\r",
 									"\r",
+									"// Chamar a função para gerar e definir o nome do quadro no ambiente\r",
 									"generateBoardName();\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -479,6 +490,11 @@
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"O campo 'diretoria' é obrigatório.\");\r",
+									"});\r",
+									"\r",
 									"\r",
 									""
 								],
@@ -549,6 +565,9 @@
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(\"O campo 'diretoria' deve possuir no máximo 50 caracteres.\");\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -618,6 +637,9 @@
 									"    pm.response.to.have.status(409);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Verificar mensagem de alerta\", function () {\r",
+									"    pm.expect(\"Não é possível salvar esse registro. Diretoria já cadastrada no sistema.\");\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -687,7 +709,9 @@
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
-									""
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\");\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -756,7 +780,9 @@
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
-									""
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\");\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -825,6 +851,10 @@
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(\"O campo 'diretoria' só pode conter letras e o caractere especial '&'.\");\r",
+									"});\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -882,207 +912,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Campo “boardName” com espaço",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"function generateBoardName() {\r",
-									"  const boardNames = [\r",
-									"    \"Marketing Digital\",\r",
-									"    \"Gestão Estratégica\",\r",
-									"    \"Desenvolvimento Web\",\r",
-									"    \"Recursos Humanos\",\r",
-									"    \"Compras Corporativas\",\r",
-									"    \"Operações Financeiras\",\r",
-									"    \"Gestão de Projetos\",\r",
-									"    \"Engenharia de Software\",\r",
-									"    \"Logística Integrada\",\r",
-									"    \"Estratégias de Vendas\",\r",
-									"    \"Design Gráfico\",\r",
-									"    \"Gestão de Recursos\",\r",
-									"    \"Comunicação Interna\",\r",
-									"    \"Assuntos Regulatórios\",\r",
-									"    \"Contabilidade Financeira\",\r",
-									"    \"Assuntos Corporativos\",\r",
-									"    \"Desenvolvimento de Produto\",\r",
-									"    \"Estratégias de Mercado\",\r",
-									"    \"Marketing de Conteúdo\",\r",
-									"    \"Gestão de Talentos\",\r",
-									"    \"Planejamento Estratégico\",\r",
-									"    \"Controle de Qualidade\",\r",
-									"    \"Assuntos de Ética\",\r",
-									"    \"Gestão de Dados\",\r",
-									"    \"Estratégias de Exportação\",\r",
-									"    \"Gestão de Redes Sociais\",\r",
-									"    \"Assuntos de Privacidade\",\r",
-									"    \"Inovação em Produto\",\r",
-									"    \"Assuntos de Segurança\",\r",
-									"    \"Gestão de Reciclagem\",\r",
-									"    \"Estratégias de Mercado\",\r",
-									"    \"Gestão de Investimentos\",\r",
-									"    \"Assuntos de Cidadania\",\r",
-									"    \"Estratégias de E-commerce\",\r",
-									"    \"Gestão de Resíduos\",\r",
-									"    \"Gestão de Propriedade\",\r",
-									"    \"Assuntos de Propaganda\",\r",
-									"    \"Gestão de Estratégia\",\r",
-									"    \"Estratégias de Comércio\",\r",
-									"    \"Gestão de Marketing\",\r",
-									"    \"Assuntos de Satisfação\",\r",
-									"    \"Estratégias de Inovação\",\r",
-									"    \"Gestão de Transporte\",\r",
-									"    \"Gestão de Mídia\",\r",
-									"    \"Estratégias de Publicidade\",\r",
-									"    \"Assuntos de Diversidade\",\r",
-									"    \"Estratégias de Eficácia\",\r",
-									"    \"Gestão de Conformidade\",\r",
-									"    \"Assuntos de Energia\",\r",
-									"    \"Gestão de Cadeia\",\r",
-									"    \"Estratégias de Desenvolvimento\",\r",
-									"    \"Gestão de Qualidade\",\r",
-									"    \"Assuntos de Responsabilidade\",\r",
-									"    \"Gestão de Inovação\",\r",
-									"    \"Estratégias de Conteúdo\",\r",
-									"    \"Gestão de Comunicação\",\r",
-									"    \"Desenvolvimento de Negócios\",\r",
-									"    \"Gestão de Operações\",\r",
-									"    \"Estratégias de TI\",\r",
-									"    \"Gestão de Sustentabilidade\",\r",
-									"    \"Assuntos de RH\",\r",
-									"    \"Gestão de Compras\",\r",
-									"    \"Estratégias de Logística\",\r",
-									"    \"Gestão de TI\",\r",
-									"    \"Estratégias de Qualidade\",\r",
-									"    \"Assuntos de TI\",\r",
-									"    \"Gestão de Marca\",\r",
-									"    \"Gestão de Segurança\",\r",
-									"    \"Assuntos de Marketing\",\r",
-									"    \"Estratégias de RH\",\r",
-									"    \"Gestão de Clientes\",\r",
-									"    \"Assuntos de Finanças\",\r",
-									"    \"Gestão de RH\",\r",
-									"    \"Estratégias de Desenvolvimento\",\r",
-									"    \"Assuntos de Logística\",\r",
-									"    \"Gestão de Estratégia\",\r",
-									"    \"Estratégias de Compras\",\r",
-									"    \"Gestão de Produção\",\r",
-									"    \"Assuntos de Produção\",\r",
-									"    \"Gestão de Finanças\",\r",
-									"    \"Estratégias de Gestão\",\r",
-									"    \"Gestão de Comércio\",\r",
-									"    \"Assuntos de Comunicação\",\r",
-									"    \"Estratégias de Produção\",\r",
-									"    \"Gestão de Negócios\",\r",
-									"    \"Assuntos de Negócios\",\r",
-									"    \"Estratégias de Negócios\",\r",
-									"    \"Gestão de Operações\",\r",
-									"    \"Assuntos de Operações\",\r",
-									"    \"Gestão de Desenvolvimento\",\r",
-									"    \"Estratégias de Desenvolvimento\",\r",
-									"    \"Gestão de Estratégias\",\r",
-									"    \"Assuntos de Estratégia\",\r",
-									"    \"Gestão de Comunicação\",\r",
-									"    \"Estratégias de Comunicação\",\r",
-									"    \"Gestão de Qualidade\",\r",
-									"    \"Assuntos de Qualidade\",\r",
-									"    \"Estratégias de Qualidade\",\r",
-									"    \"Gestão de Projetos\",\r",
-									"    \"Assuntos de Projetos\",\r",
-									"    \"Gestão de Engenharia\",\r",
-									"    \"Estratégias de Engenharia\",\r",
-									"    \"Gestão de Logística\",\r",
-									"    \"Assuntos de Logística\",\r",
-									"    \"Gestão de Marketing\",\r",
-									"    \"Estratégias de Marketing\",\r",
-									"    \"Gestão de Design\",\r",
-									"    \"Assuntos de Design\",\r",
-									"    \"Gestão de Inovação\",\r",
-									"    \"Estratégias de Inovação\",\r",
-									"    \"Gestão de Sustentabilidade\",\r",
-									"    \"Assuntos de Sustentabilidade\",\r",
-									"    \"Estratégias de Sustentabilidade\",\r",
-									"  ];\r",
-									"\r",
-									"  const randomBoardName = boardNames[Math.floor(Math.random() * boardNames.length)];\r",
-									"\r",
-									"  pm.environment.set('boardName', randomBoardName);\r",
-									"}\r",
-									"\r",
-									"generateBoardName();\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{Token}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "token",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "query",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"boardName\": \"{{boardName}}\"\r\n}\r\n\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/board/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"board",
-								""
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"auth": {
@@ -1118,6 +947,131 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Delete Novo Admin",
+			"item": [
+				{
+					"name": "Login ADMIN Qa.Coders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Mensagem de sucesso ao deletar usuário\", function () {\r",
+									"    pm.expect(pm.response.json().msg).to.eql(\"Usuário deletado com sucesso!.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

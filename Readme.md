@@ -11,12 +11,12 @@ Projeto de automação com Postman.
     npm install -g newman-reporter-htmlextra
 ```
 
-## Execução com newman
+## Execução com Newman
 ```bash
     newman run signup.json -e env-automacao.json -g env-global.json
 ```
 
-## Execução com report html extra
+## Execução com Report html extra
 ```bash
     newman run signup.json -e env-automacao.json -g env-global.json -r htmlextra
 ```

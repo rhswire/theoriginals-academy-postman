@@ -313,7 +313,12 @@
 									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
-									"});"
+									"});\r",
+									"\r",
+									"const fullName = pm.response.json().user.fullName;\r",
+									"const expectedMessage = `Olá ${fullName} cadastro realizado com sucesso.`;\r",
+									"pm.test(`Verificar mensagem de sucesso`, () => pm.expect(pm.response.json().msg).to.eql(expectedMessage));\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -475,7 +480,11 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
-									"});"
+									"});\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O campo nome completo é obrigatório.\"]);\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -547,7 +556,12 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
-									"});"
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O nome completo deve ter no máximo 100 caracteres.\"]);\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -607,6 +621,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Informe o nome e sobrenome com as iniciais em letra maiúscula.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -667,6 +685,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Informe o nome e sobrenome com as iniciais em letra maiúscula.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -727,6 +749,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Informe o nome e sobrenome com as iniciais em letra maiúscula.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -787,6 +813,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O campo e-mail é obrigatório.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -847,6 +877,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -907,6 +941,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -967,7 +1005,12 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
-									"});"
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Campo senha é obrigatório\"]);\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1027,7 +1070,13 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
-									"});"
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
+									"});\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1087,6 +1136,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1147,6 +1200,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1207,6 +1264,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1267,7 +1328,13 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
-									"});"
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
+									"});\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1325,9 +1392,15 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 409\", function () {\r",
-									"    pm.response.to.have.status(409);\r",
-									"});"
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-16.\"]);\r",
+									"});\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1358,7 +1431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"fullName\": \"Isadora Cruz\",\r\n  \"mail\": \"isadoracruz@test.com.br\",\r\n  \"password\": \"Amig@12345678\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"59876543214\",\r\n  \"confirmPassword\": \"Amig@12345678\"\r\n}",
+							"raw": "{\r\n  \"fullName\": \"Isadora Joaquin\",\r\n  \"mail\": \"isadorajoaquina@test.com.br\",\r\n  \"password\": \"Amig@1234567891011\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"45776544789\",\r\n  \"confirmPassword\": \"Amig@1234567891011\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1387,6 +1460,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O campo perfil de acesso é obrigatório.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1447,6 +1524,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O campo CPF é obrigatório!\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1507,7 +1588,13 @@
 								"exec": [
 									"pm.test(\"Status code is 409\", function () {\r",
 									"    pm.response.to.have.status(409);\r",
-									"});"
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de alerta\", function () {\r",
+									"    pm.expect(pm.response.json().alert).to.eql([\"O cpf informado já existe em nossa base de dados.\"]);\r",
+									"});\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1567,6 +1654,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Campo CPF deve conter apenas números\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1627,6 +1718,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Deve preencher o CPF com 11 dígitos\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1687,6 +1782,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"Deve preencher o CPF com 11 dígitos\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1747,6 +1846,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"O campo de confirmação de senha não pode ficar vazio.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1807,6 +1910,10 @@
 								"exec": [
 									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de erro\", function () {\r",
+									"    pm.expect(pm.response.json().error).to.eql([\"As senhas não coincidem.\"]);\r",
 									"});"
 								],
 								"type": "text/javascript"

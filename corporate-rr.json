@@ -541,7 +541,7 @@
 									"        \"SP\": {\r",
 									"            \"São Paulo\": {\r",
 									"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
-									"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+									"                \"streets\": [\"Rua Augusta\", \"Av Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
 									"            },\r",
 									"            \"Campinas\": {\r",
 									"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",

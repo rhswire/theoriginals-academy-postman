@@ -8,10 +8,10 @@
 	},
 	"item": [
 		{
-			"name": "Login ADMIN",
+			"name": "Login ADMIN Qa.Coders",
 			"item": [
 				{
-					"name": "Login ADMIN",
+					"name": "Login ADMIN Qa.Coders",
 					"event": [
 						{
 							"listen": "test",
@@ -65,12 +65,14 @@
 			"name": "Login Novo ADMIN",
 			"item": [
 				{
-					"name": "Novo Admin",
+					"name": "Criar Novo Admin",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.environment.set(\"userId\",pm.variables.replaceIn(JSON.parse(responseBody).user._id));\r",
+									"\r",
 									"pm.test(\"Status code is 201\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
 									"});"
@@ -130,8 +132,37 @@
 									"\r",
 									"\r",
 									"function generateFullName() {\r",
-									"  const names = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\", \"Frank\", \"Grace\", \"Helen\", \"Ivan\", \"Julia\", \"Karen\", \"Leo\", \"Mia\", \"Nathan\", \"Olivia\", \"Paul\", \"Rachel\", \"Samuel\", \"Tina\", \"William\", \"Juliana\", \"Isadora\", \"Rebeca\", \"Rafaela\", \"Sabrina\", \"Felipe\", \"Michel\", \"Santiago\", \"Marcos\", \"Joaquim\", \"Maria\", \"Rodrigo\", \"Alessandro\", \"Pedro\", \"Fabiano\", \"Artur\"];\r",
-									"  const surnames = [\"Smith\", \"Johnson\", \"Brown\", \"Wilson\", \"Lee\", \"Clark\", \"Garcia\", \"Lopez\", \"Adams\", \"Parker\", \"Taylor\", \"Harris\", \"Young\", \"Martin\", \"White\", \"Anderson\", \"Thompson\", \"Moore\", \"Walker\", \"Evans\"];\r",
+									"  const names = [\r",
+									"    \"Amelia\", \"Bernardo\", \"Cecilia\", \"Dante\", \"Elisa\", \"Fernando\", \"Giovanna\", \"Hugo\",\r",
+									"    \"Íris\", \"João\", \"Larissa\", \"Matheus\", \"Nícolas\", \"Otávio\", \"Patrícia\", \"Quentin\",\r",
+									"    \"Renata\", \"Sofia\", \"Thiago\", \"Valentina\", \"Yasmin\", \"Zacarias\", \"Luna\", \"Enzo\",\r",
+									"    \"Vitória\", \"Ricardo\", \"Mariana\", \"Lucas\", \"Beatriz\", \"Eduardo\", \"Camila\", \"Gabriel\",\r",
+									"    \"Helena\", \"Ian\", \"Jade\", \"Kaique\", \"Lorena\", \"Miguel\", \"Natalia\", \"Oliver\",\r",
+									"    \"Pietra\", \"Quezia\", \"Raul\", \"Stella\", \"Tales\", \"Ursula\", \"Vinicius\", \"Wendy\", \"Xavier\",\r",
+									"    \"Yuri\", \"Agatha\", \"Bruno\", \"Carla\", \"Diego\", \"Elaine\", \"Fábio\", \"Gisele\", \"Heitor\",\r",
+									"    \"Ingrid\", \"Júlio\", \"Karina\", \"Léo\", \"Mirella\", \"Nilo\", \"Oscar\", \"Priscila\",\r",
+									"    \"Quirino\", \"Rosa\", \"Sérgio\", \"Tânia\", \"Ulisses\", \"Vera\", \"Walter\", \"Xênia\",\r",
+									"    \"Yago\", \"Zilda\", \"Álvaro\", \"Érica\", \"Ígor\", \"Óliver\", \"Úrsula\", \"Caio\",\r",
+									"    \"Daniela\", \"Estevan\", \"Fernanda\", \"Gustavo\", \"Hilda\", \"Ítalo\", \"Janaína\",\r",
+									"    \"Kleber\", \"Lívia\", \"Marcio\", \"Nádia\", \"Orlando\", \"Paloma\", \"Roberto\",\r",
+									"    \"Sílvia\", \"Tadeu\", \"Ubaldo\", \"Viviane\", \"Wilson\"\r",
+									"  ];\r",
+									"  \r",
+									"  const surnames = [\r",
+									"    \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\", \"Fernandes\", \"Almeida\", \"Costa\",\r",
+									"    \"Teixeira\", \"Martins\", \"Lima\", \"Mendonça\", \"Nunes\", \"Carvalho\", \"Melo\", \"Cardoso\",\r",
+									"    \"Pires\", \"Jesus\", \"Araújo\", \"Ribeiro\", \"Nascimento\", \"Lopes\", \"Marques\", \"Rocha\",\r",
+									"    \"Alves\", \"Monteiro\", \"Neves\", \"Barros\", \"Moura\", \"Dias\", \"Ferreira\", \"Silveira\",\r",
+									"    \"Gomes\", \"Magalhães\", \"Cruz\", \"Castro\", \"Siqueira\", \"Moraes\", \"Barbosa\", \"Pereira\",\r",
+									"    \"Andrade\", \"Leite\", \"Henrique\", \"Guimarães\", \"Freitas\", \"Viana\", \"Brito\", \"Sales\",\r",
+									"    \"Peixoto\", \"Farias\", \"Albuquerque\", \"Barbieri\", \"Cavalcanti\", \"Dumont\", \"Espíndola\",\r",
+									"    \"Figueiredo\", \"Goulart\", \"Holanda\", \"Izabel\", \"Jardim\", \"Krause\", \"Lacerda\", \"Macedo\",\r",
+									"    \"Nogueira\", \"Oliveira\", \"Pacheco\", \"Queiroz\", \"Rezende\", \"Salazar\", \"Torres\", \"Uchoa\",\r",
+									"    \"Vasconcelos\", \"Werneck\", \"Ximenes\", \"Yamada\", \"Zanetti\", \"Andrade\", \"Braga\", \"Camargo\",\r",
+									"    \"Drumond\", \"Esteves\", \"Fontes\", \"Guimarães\", \"Haddad\", \"Ibrahim\", \"Jacinto\", \"Kubitschek\",\r",
+									"    \"Lemos\", \"Moraes\", \"Navarro\", \"Otero\", \"Pimentel\", \"Quintana\", \"Rangel\", \"Sampaio\",\r",
+									"    \"Tavares\", \"Urbano\", \"Vieira\", \"Watanabe\"\r",
+									"  ];\r",
 									"\r",
 									"  const randomFirstName = names[Math.floor(Math.random() * names.length)];\r",
 									"  const randomLastName = surnames[Math.floor(Math.random() * surnames.length)];\r",
@@ -332,21 +363,40 @@
 									"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
 									"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
 									"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
-									"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+									"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\",\r",
+									"        \"Alpha\", \"Omega\", \"Infinity\", \"Eagle\", \"Diamond\",\r",
+									"        \"Sapphire\", \"Ruby\", \"Emerald\", \"Gold\", \"Silver\",\r",
+									"        \"Cosmos\", \"Galaxy\", \"Celestial\", \"Lunar\", \"Stellar\",\r",
+									"        \"Aurora\", \"Neptune\", \"Saturn\", \"Mercury\", \"Venus\",\r",
+									"        \"Titan\", \"Polaris\", \"Comet\", \"Meteor\", \"Nebula\",\r",
+									"        \"Orion\", \"Phoenix\", \"Spectrum\", \"Zephyr\", \"Horizon\"\r",
 									"    ];\r",
 									"\r",
 									"    const secondPart = [\r",
 									"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
 									"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
 									"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
-									"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+									"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\",\r",
+									"        \"Space\", \"Globe\", \"Nexus\", \"Vertex\", \"Horizon\",\r",
+									"        \"Echo\", \"Pulse\", \"Echo\", \"Pulse\", \"Vortex\",\r",
+									"        \"Matrix\", \"Stream\", \"Path\", \"Channel\", \"Grid\",\r",
+									"        \"Array\", \"Block\", \"Bridge\", \"Core\", \"Arc\",\r",
+									"        \"Bridge\", \"Conduit\", \"Corridor\", \"Nest\", \"Domain\",\r",
+									"        \"Axis\", \"Corona\", \"Sphere\", \"Unity\", \"Momentum\"\r",
 									"    ];\r",
 									"\r",
 									"    const thirdPart = [\r",
 									"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
 									"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
 									"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
-									"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+									"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\",\r",
+									"        \"Ventures\", \"Enterprises\", \"Industries\", \"Alliance\", \"Agency\",\r",
+									"        \"Synergy\", \"Syndicate\", \"Fusion\", \"Union\", \"Guild\",\r",
+									"        \"Collaborative\", \"Collective\", \"Coalition\", \"Consortium\", \"Fellowship\",\r",
+									"        \"Association\", \"Network\", \"Federation\", \"Alliance\", \"Bloc\",\r",
+									"        \"Syndication\", \"Consolidated\", \"Conglomerate\", \"Cluster\", \"Convergence\",\r",
+									"        \"Connect\", \"Enterprise\", \"International\", \"Group\", \"Synergy\",\r",
+									"        \"Strategies\", \"Alliance\", \"United\", \"Enterprises\", \"Global\"\r",
 									"    ];\r",
 									"\r",
 									"    const emailDomains = [\r",
@@ -1395,21 +1445,40 @@
 											"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
 											"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
 											"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
-											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\",\r",
+											"        \"Alpha\", \"Omega\", \"Infinity\", \"Eagle\", \"Diamond\",\r",
+											"        \"Sapphire\", \"Ruby\", \"Emerald\", \"Gold\", \"Silver\",\r",
+											"        \"Cosmos\", \"Galaxy\", \"Celestial\", \"Lunar\", \"Stellar\",\r",
+											"        \"Aurora\", \"Neptune\", \"Saturn\", \"Mercury\", \"Venus\",\r",
+											"        \"Titan\", \"Polaris\", \"Comet\", \"Meteor\", \"Nebula\",\r",
+											"        \"Orion\", \"Phoenix\", \"Spectrum\", \"Zephyr\", \"Horizon\"\r",
 											"    ];\r",
 											"\r",
 											"    const secondPart = [\r",
 											"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
 											"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
 											"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
-											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\",\r",
+											"        \"Space\", \"Globe\", \"Nexus\", \"Vertex\", \"Horizon\",\r",
+											"        \"Echo\", \"Pulse\", \"Echo\", \"Pulse\", \"Vortex\",\r",
+											"        \"Matrix\", \"Stream\", \"Path\", \"Channel\", \"Grid\",\r",
+											"        \"Array\", \"Block\", \"Bridge\", \"Core\", \"Arc\",\r",
+											"        \"Bridge\", \"Conduit\", \"Corridor\", \"Nest\", \"Domain\",\r",
+											"        \"Axis\", \"Corona\", \"Sphere\", \"Unity\", \"Momentum\"\r",
 											"    ];\r",
 											"\r",
 											"    const thirdPart = [\r",
 											"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
 											"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
 											"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
-											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\",\r",
+											"        \"Ventures\", \"Enterprises\", \"Industries\", \"Alliance\", \"Agency\",\r",
+											"        \"Synergy\", \"Syndicate\", \"Fusion\", \"Union\", \"Guild\",\r",
+											"        \"Collaborative\", \"Collective\", \"Coalition\", \"Consortium\", \"Fellowship\",\r",
+											"        \"Association\", \"Network\", \"Federation\", \"Alliance\", \"Bloc\",\r",
+											"        \"Syndication\", \"Consolidated\", \"Conglomerate\", \"Cluster\", \"Convergence\",\r",
+											"        \"Connect\", \"Enterprise\", \"International\", \"Group\", \"Synergy\",\r",
+											"        \"Strategies\", \"Alliance\", \"United\", \"Enterprises\", \"Global\"\r",
 											"    ];\r",
 											"\r",
 											"    const emailDomains = [\r",
@@ -2323,21 +2392,40 @@
 											"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\", \r",
 											"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
 											"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
-											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+											"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\",\r",
+											"        \"Alpha\", \"Omega\", \"Infinity\", \"Eagle\", \"Diamond\",\r",
+											"        \"Sapphire\", \"Ruby\", \"Emerald\", \"Gold\", \"Silver\",\r",
+											"        \"Cosmos\", \"Galaxy\", \"Celestial\", \"Lunar\", \"Stellar\",\r",
+											"        \"Aurora\", \"Neptune\", \"Saturn\", \"Mercury\", \"Venus\",\r",
+											"        \"Titan\", \"Polaris\", \"Comet\", \"Meteor\", \"Nebula\",\r",
+											"        \"Orion\", \"Phoenix\", \"Spectrum\", \"Zephyr\", \"Horizon\"\r",
 											"    ];\r",
 											"\r",
 											"    const secondPart = [\r",
 											"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
 											"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
 											"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
-											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+											"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\",\r",
+											"        \"Space\", \"Globe\", \"Nexus\", \"Vertex\", \"Horizon\",\r",
+											"        \"Echo\", \"Pulse\", \"Echo\", \"Pulse\", \"Vortex\",\r",
+											"        \"Matrix\", \"Stream\", \"Path\", \"Channel\", \"Grid\",\r",
+											"        \"Array\", \"Block\", \"Bridge\", \"Core\", \"Arc\",\r",
+											"        \"Bridge\", \"Conduit\", \"Corridor\", \"Nest\", \"Domain\",\r",
+											"        \"Axis\", \"Corona\", \"Sphere\", \"Unity\", \"Momentum\"\r",
 											"    ];\r",
 											"\r",
 											"    const thirdPart = [\r",
 											"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
 											"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
 											"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
-											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+											"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\",\r",
+											"        \"Ventures\", \"Enterprises\", \"Industries\", \"Alliance\", \"Agency\",\r",
+											"        \"Synergy\", \"Syndicate\", \"Fusion\", \"Union\", \"Guild\",\r",
+											"        \"Collaborative\", \"Collective\", \"Coalition\", \"Consortium\", \"Fellowship\",\r",
+											"        \"Association\", \"Network\", \"Federation\", \"Alliance\", \"Bloc\",\r",
+											"        \"Syndication\", \"Consolidated\", \"Conglomerate\", \"Cluster\", \"Convergence\",\r",
+											"        \"Connect\", \"Enterprise\", \"International\", \"Group\", \"Synergy\",\r",
+											"        \"Strategies\", \"Alliance\", \"United\", \"Enterprises\", \"Global\"\r",
 											"    ];\r",
 											"\r",
 											"    const emailDomains = [\r",
@@ -4869,6 +4957,133 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Delete Novo ADMIN",
+			"item": [
+				{
+					"name": "Login ADMIN Qa.Coders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Novo ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.variables.replaceIn(JSON.parse(responseBody).token));\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Mensagem de sucesso ao deletar usuário\", function () {\r",
+									"    pm.expect(pm.response.json().msg).to.eql(\"Usuário deletado com sucesso!.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

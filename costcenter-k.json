@@ -1,0 +1,893 @@
+{
+	"info": {
+		"_postman_id": "e92147b3-2904-4c8c-8876-19eff7894f7a",
+		"name": "Qa.Coders Academy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27688809",
+		"_collection_link": "https://lively-comet-905188.postman.co/workspace/Karine~d4467990-fe80-4705-9845-69d9ea13db3c/collection/27688809-e92147b3-2904-4c8c-8876-19eff7894f7a?action=share&source=collection_link&creator=27688809"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"token\", JSON.parse(responseBody).token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n  \"mail\": \"{{MailAdmin}}\",\r\n  \"password\": \"{{PasswordAdmin}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/login/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Diretoria",
+			"item": [
+				{
+					"name": "Criar Diretoria",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"boardId\",pm.variables.replaceIn(JSON.parse(responseBody).newBoard._id));",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateBoardName() {\r",
+									"    // Array ampliado com nomes criativos de diretorias\r",
+									"    var directorateNames = [\r",
+									"        \"Inovação\", \"Estratégia\", \"Tecnologia\", \"Desenvolvimento\", \"Operações\",\r",
+									"        \"Marketing\", \"Finanças\", \"RecursosHumanos\", \"Comercial\", \"Produção\",\r",
+									"        \"Logística\", \"Qualidade\", \"Pesquisa\", \"Design\", \"Sustentabilidade\",\r",
+									"        \"Educação\", \"Comunicação\", \"Jurídico\", \"Internacional\", \"Digital\",\r",
+									"        \"Assuntos Públicos\", \"Assuntos Corporativos\", \"Assuntos Governamentais\", \"Assuntos Regulatórios\",\r",
+									"        \"Relações Institucionais\", \"Relações Externas\", \"Parcerias Estratégicas\", \"Gestão de Projetos\",\r",
+									"        \"Relações com Investidores\", \"Planejamento Estratégico\", \"Transformação Digital\", \"Inovação e Tecnologia\",\r",
+									"        \"Desenvolvimento de Negócios\", \"Relações Comerciais\", \"Experiência do Cliente\", \"Estratégias de Mercado\",\r",
+									"        \"Desenvolvimento Organizacional\", \"Transformação Cultural\", \"Gestão de Mudanças\", \"Desenvolvimento Sustentável\",\r",
+									"        \"Soluções Criativas\", \"Gestão de Talentos\", \"Gestão de Riscos\", \"Gestão de Segurança da Informação\",\r",
+									"        \"Gestão de Compliance\", \"Gestão de Projetos de TI\", \"Gestão de Operações\", \"Gestão de Infraestrutura\",\r",
+									"        \"Gestão de Tecnologia da Informação\", \"Gestão de Inovação\", \"Gestão de Qualidade\", \"Gestão de Processos\",\r",
+									"        \"Gestão de Performance\", \"Gestão de Relacionamento com o Cliente\", \"Gestão de Recursos Humanos\",\r",
+									"        \"Gestão de Marketing\", \"Gestão de Vendas\", \"Gestão de Compras\", \"Gestão de Logística\", \"Gestão Financeira\",\r",
+									"        \"Gestão Administrativa\", \"Gestão de Produtos\", \"Gestão de Serviços\", \"Gestão de Atendimento ao Cliente\",\r",
+									"        \"Gestão de Suporte Técnico\", \"Gestão de Manutenção\", \"Gestão de Qualidade de Produto\", \"Gestão de P&D\",\r",
+									"        \"Gestão de Sustentabilidade\", \"Gestão de Relações Institucionais\", \"Gestão de Relações Externas\",\r",
+									"        \"Gestão de Parcerias Estratégicas\", \"Gestão de Relações com Investidores\", \"Gestão de Planejamento Estratégico\",\r",
+									"        \"Gestão de Transformação Digital\", \"Gestão de Inovação e Tecnologia\", \"Gestão de Desenvolvimento de Negócios\",\r",
+									"        \"Gestão de Relações Comerciais\", \"Gestão de Experiência do Cliente\", \"Gestão de Estratégias de Mercado\",\r",
+									"        \"Gestão de Desenvolvimento Organizacional\", \"Gestão de Transformação Cultural\", \"Gestão de Mudança\",\r",
+									"        \"Gestão de Desenvolvimento Sustentável\", \"Gestão de Soluções Criativas\", \"Gestão de Talentos e Cultura\",\r",
+									"        \"Gestão de Riscos Corporativos\", \"Gestão de Segurança da Informação\", \"Gestão de Compliance e Ética\",\r",
+									"        \"Gestão de Projetos de TI e Inovação\", \"Gestão de Operações e Processos\", \"Gestão de Infraestrutura e Tecnologia\",\r",
+									"        \"Gestão de Qualidade e Performance\", \"Gestão de Relacionamento com o Cliente e Serviços\",\r",
+									"        \"Gestão de Marketing e Vendas\", \"Gestão de Compras e Logística\", \"Gestão Financeira e Administrativa\",\r",
+									"        \"Gestão de Produtos e Serviços\", \"Gestão de Atendimento ao Cliente e Suporte Técnico\",\r",
+									"        \"Gestão de Manutenção e Qualidade de Produto\", \"Gestão de P&D e Inovação\", \"Gestão de Sustentabilidade e Impacto Social\",\r",
+									"        \"Gestão de Relações Institucionais e Externas\", \"Gestão de Parcerias Estratégicas e Investimentos\",\r",
+									"        \"Gestão de Planejamento Estratégico e Transformação Digital\", \"Gestão de Inovação e Tecnologia de Negócios\",\r",
+									"        \"Gestão de Desenvolvimento de Negócios e Relações Comerciais\", \"Gestão de Experiência do Cliente e Relacionamento com o Consumidor\",\r",
+									"        \"Gestão de Estratégias de Mercado e Comunicação\", \"Gestão de Desenvolvimento Organizacional e Cultural\",\r",
+									"        \"Gestão de Transformação Digital e Inovação Tecnológica\", \"Gestão de Mudança e Adaptação Organizacional\",\r",
+									"        \"Gestão de Desenvolvimento Sustentável e Responsabilidade Ambiental\", \"Gestão de Soluções Criativas e Inovação de Processos\",\r",
+									"        \"Gestão de Talentos e Liderança\", \"Gestão de Riscos Corporativos e Conformidade Regulatória\", \"Gestão de Segurança da Informação e Privacidade de Dados\",\r",
+									"        \"Gestão de Compliance e Ética Empresarial\", \"Gestão de Projetos de TI e Transformação Digital\", \"Gestão de Operações e Excelência de Processos\",\r",
+									"        \"Gestão de Infraestrutura e Tecnologia de Informação\", \"Gestão de Qualidade e Performance Operacional\", \"Gestão de Relacionamento com o Cliente e Serviços Digitais\",\r",
+									"        \"Gestão de Marketing e Vendas Online\", \"Gestão de Compras e Logística Integrada\", \"Gestão Financeira e Administrativa Estratégica\",\r",
+									"        \"Gestão de Produtos e Serviços Inovadores\", \"Gestão de Atendimento ao Cliente e Suporte Técnico Especializado\",\r",
+									"        \"Gestão de Manutenção e Qualidade de Produto\", \"Gestão de P&D e Inovação Tecnológica\", \"Gestão de Sustentabilidade e Impacto Social\",\r",
+									"        \"Gestão de Relações Institucionais e Parcerias Estratégicas\", \"Gestão de Planejamento Estratégico e Transformação Organizacional\"\r",
+									"    ];\r",
+									" \r",
+									"    // Seleciona duas diretorias aleatórias do array\r",
+									"    var randomDirectorate1 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									"    var randomDirectorate2 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									" \r",
+									"    // Combina as diretorias com o caractere especial '&', sem espaços\r",
+									"    var boardName = randomDirectorate1 + \"&\" + randomDirectorate2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (boardName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        boardName = boardName.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return boardName;\r",
+									"\r",
+									"}\r",
+									"\r",
+									"// Gera um nome para a variável boardName e define como uma variável de ambiente\r",
+									"var boardName = generateBoardName();\r",
+									"pm.environment.set(\"boardName\", boardName); // Define a variável no ambiente\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"boardName\": \"{{boardName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/board/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Centro de Custos",
+			"item": [
+				{
+					"name": "Create Cost Center",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateCostCenterName() {\r",
+									"    // Array com nomes representativos de centros de custos\r",
+									"    var costCenterNames = [\r",
+									"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+									"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+									"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+									"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\",\r",
+									"        \"Desenvolvimento\", \"Gestão de Projetos\", \"Comunicação\", \"Suporte Técnico\",\r",
+									"        \"Engenharia\", \"Inovação\", \"Estratégia\", \"Compliance\", \"Relações Públicas\",\r",
+									"        \"Sustentabilidade\", \"Assuntos Corporativos\", \"Gestão de Riscos\", \"Contabilidade\",\r",
+									"        \"Assuntos Regulatórios\", \"Assuntos Internacionais\", \"Planejamento Financeiro\",\r",
+									"        \"Gestão de Talentos\", \"Desenvolvimento de Produto\", \"Gestão de Fornecedores\",\r",
+									"        \"Gestão de Qualidade\", \"Gestão de Processos\", \"Marketing Digital\", \"E-commerce\",\r",
+									"        \"Desenvolvimento de Mercado\", \"Assuntos Ambientais\", \"Assuntos de TI\", \"Operações Globais\",\r",
+									"        \"Planejamento Estratégico\", \"Gestão de Vendas\", \"Assuntos Governamentais\", \"Parcerias de Negócios\",\r",
+									"        \"Gestão de Portfólio\", \"Gestão de Ativos\", \"Educação Corporativa\", \"Gestão de Eventos\",\r",
+									"        \"Gestão de Instalações\", \"Assuntos de Ética\", \"Gestão de Dados\", \"Gestão de Atendimento ao Cliente\",\r",
+									"        \"Gestão de Compliance\", \"Desenvolvimento Organizacional\", \"Gestão de Investimentos\", \"Gestão de Mudanças\",\r",
+									"        \"Estratégias de Mercado\", \"Gestão de Projetos de TI\", \"Gestão de Mídia\", \"Gestão de Parcerias\",\r",
+									"        \"Estratégias de Produto\", \"Gestão de Atendimento\", \"Gestão de Relacionamento com o Cliente\",\r",
+									"        \"Estratégias de Crescimento\", \"Gestão de Contatos\", \"Gestão de Marketing de Conteúdo\",\r",
+									"        \"Estratégias de Vendas\", \"Gestão de Relações Públicas\", \"Estratégias de Comunicação\",\r",
+									"        \"Gestão de Crises\", \"Estratégias de Desenvolvimento de Produto\", \"Gestão de Inovação\",\r",
+									"        \"Gestão de Relações Internacionais\", \"Estratégias de Expansão\", \"Gestão de Sustentabilidade\",\r",
+									"        \"Estratégias de Responsabilidade Social Corporativa\", \"Gestão de Resíduos\", \"Estratégias de Reciclagem\",\r",
+									"        \"Gestão de Energia\", \"Estratégias de Eficiência Energética\", \"Gestão de Tecnologia da Informação\",\r",
+									"        \"Estratégias de Segurança da Informação\", \"Gestão de Redes Sociais\", \"Estratégias de Mídias Sociais\",\r",
+									"        \"Gestão de Big Data\", \"Estratégias de Analytics\", \"Gestão de Inteligência Artificial\",\r",
+									"        \"Estratégias de Machine Learning\", \"Gestão de Inovação Tecnológica\", \"Estratégias de Transformação Digital\"\r",
+									"    ];\r",
+									" \r",
+									"    // Seleciona dois centros de custos aleatórios do array\r",
+									"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									" \r",
+									"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+									"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (costCenterName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        costCenterName = costCenterName.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return costCenterName;\r",
+									"}\r",
+									" \r",
+									"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+									"var costCenterName = generateCostCenterName();\r",
+									"pm.globals.set(\"costCenterName\", costCenterName); // Define a variável no ambiente\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Fixed status code test\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.globals.set(\"costCenterId\",pm.variables.replaceIn(JSON.parse(responseBody).newCostCenter._id));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/costCenter/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate cost center",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verificar mensagem de inativação\", function () {\r",
+									"    pm.expect(\"Centro de custos inativado com sucesso!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/costCenter/status/{{costCenterId}}",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"costCenter",
+								"status",
+								"{{costCenterId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cost Center",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									" \r",
+									"function generateCostCenterName() {\r",
+									"    // Array com nomes representativos de centros de custos\r",
+									"    var costCenterNames = [\r",
+									"        \"Produção\", \"Marketing\", \"Vendas\", \"TI\", \"RH\",\r",
+									"        \"Operações\", \"Logística\", \"Financeiro\", \"P&D\", \"Atendimento\",\r",
+									"        \"Manutenção\", \"Qualidade\", \"Compras\", \"Segurança\", \"Jurídico\",\r",
+									"        \"Administrativo\", \"Exportação\", \"Importação\", \"Treinamento\", \"Infraestrutura\"\r",
+									"    ];\r",
+									" \r",
+									"    // Seleciona dois centros de custos aleatórios do array\r",
+									"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									" \r",
+									"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+									"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (costCenterName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        costCenterName = costCenterName.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return costCenterName;\r",
+									"}\r",
+									" \r",
+									"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+									"var costCenterName = generateCostCenterName();\r",
+									"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente\r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Fixed status code test\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Fixed environment variable setting\r",
+									"pm.environment.set(\"costCenterId\", pm.response.json()[0]._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/costCenter/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "Happy Path",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Gerar corporateName, matriz e email\r",
+									"function generateCorporateName() {\r",
+									"    const firstPart = [\r",
+									"        \"Tech\", \"Global\", \"Prime\", \"Future\", \"Vision\",\r",
+									"        \"Elite\", \"Star\", \"Nova\", \"Quantum\", \"Solar\",\r",
+									"        \"Blue\", \"Green\", \"Red\", \"Yellow\", \"Purple\",\r",
+									"        \"Ocean\", \"Mountain\", \"River\", \"Sky\", \"Forest\"\r",
+									"    ];\r",
+									" \r",
+									"    const secondPart = [\r",
+									"        \"Solutions\", \"Systems\", \"Dynamics\", \"Innovations\", \"Concepts\",\r",
+									"        \"Designs\", \"Technologies\", \"Services\", \"Networks\", \"Logistics\",\r",
+									"        \"Hub\", \"Point\", \"Edge\", \"Line\", \"Wave\",\r",
+									"        \"Field\", \"Node\", \"Link\", \"Portal\", \"Platform\"\r",
+									"    ];\r",
+									" \r",
+									"    const thirdPart = [\r",
+									"        \"Matriz\", \"Grupo\", \"Associados\", \"Holdings\", \"International\",\r",
+									"        \"Corporation\", \"Limited\", \"Institute\", \"Union\", \"Partners\",\r",
+									"        \"Foundation\", \"Center\", \"Consultants\", \"Experts\", \"Masters\",\r",
+									"        \"Creators\", \"Builders\", \"Pioneers\", \"Leaders\", \"Innovators\"\r",
+									"    ];\r",
+									" \r",
+									"    const emailDomains = [\r",
+									"        \"@example.com\", \"@mail.com\", \"@business.com\", \"@corporate.com\",\r",
+									"        \"@enterprise.com\", \"@company.com\", \"@industry.com\", \"@commerce.com\",\r",
+									"        \"@firm.com\", \"@professional.com\"\r",
+									"    ];\r",
+									" \r",
+									"    const name1 = firstPart[Math.floor(Math.random() * firstPart.length)];\r",
+									"    const name2 = secondPart[Math.floor(Math.random() * secondPart.length)];\r",
+									" \r",
+									"    let corporateName = `${name1} ${name2}`;\r",
+									"    let matriz = `${corporateName} ${thirdPart[Math.floor(Math.random() * thirdPart.length)]}`;\r",
+									" \r",
+									"    // Escolhendo um domínio de e-mail aleatoriamente\r",
+									"    let emailDomain = emailDomains[Math.floor(Math.random() * emailDomains.length)];\r",
+									"    let email = `${corporateName.replace(/\\s+/g, '').toLowerCase()}${emailDomain}`;\r",
+									" \r",
+									"    return { corporateName, matriz, email };\r",
+									"}\r",
+									" \r",
+									"let { corporateName, matriz, email } = generateCorporateName();\r",
+									"pm.environment.set(\"corporateName\", corporateName);\r",
+									"pm.environment.set(\"matriz\", matriz);\r",
+									"pm.environment.set(\"email\", email);\r",
+									" \r",
+									" \r",
+									"/*function generateCNPJ() {\r",
+									"    let cnpj = '';\r",
+									"    for (let i = 1; i <= 12; i++) {\r",
+									"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+									"    }\r",
+									" \r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									" \r",
+									"    return cnpj;\r",
+									"}\r",
+									" \r",
+									"function calculateVerificationDigit(cnpj) {\r",
+									"    let size = cnpj.length - 12;\r",
+									"    let numbers = cnpj.substring(0, size);\r",
+									"    let digits = cnpj.substring(size);\r",
+									"    let sum = 0;\r",
+									"    let pos = size - 7;\r",
+									"    for (let i = size; i >= 1; i--) {\r",
+									"        sum += numbers.charAt(size - i) * pos--;\r",
+									"        if (pos < 2) pos = 9;\r",
+									"    }\r",
+									"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+									"    return result.toString();\r",
+									"}\r",
+									" \r",
+									"function formatCNPJ(cnpj) {\r",
+									"    return cnpj.replace(/^(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})$/, \"$1.$2.$3/$4-$5\");\r",
+									"}\r",
+									" \r",
+									"let cnpj = generateCNPJ();\r",
+									"let formattedCNPJ = formatCNPJ(cnpj);\r",
+									"pm.environment.set(\"cnpj\", formattedCNPJ);*/\r",
+									" \r",
+									"//Criar CNPJ da empresa\r",
+									"function generateCNPJ() {\r",
+									"    let cnpj = '';\r",
+									"    for (let i = 1; i <= 12; i++) {\r",
+									"        cnpj += Math.floor(Math.random() * 9).toString();\r",
+									"    }\r",
+									" \r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									"    cnpj += calculateVerificationDigit(cnpj);\r",
+									" \r",
+									"    return cnpj;\r",
+									"}\r",
+									" \r",
+									"function calculateVerificationDigit(cnpj) {\r",
+									"    let size = cnpj.length - 12;\r",
+									"    let numbers = cnpj.substring(0, size);\r",
+									"    let digits = cnpj.substring(size);\r",
+									"    let sum = 0;\r",
+									"    let pos = size - 7;\r",
+									"    for (let i = size; i >= 1; i--) {\r",
+									"        sum += numbers.charAt(size - i) * pos--;\r",
+									"        if (pos < 2) pos = 9;\r",
+									"    }\r",
+									"    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;\r",
+									"    return result.toString();\r",
+									"}\r",
+									" \r",
+									"let cnpj = generateCNPJ();\r",
+									"pm.environment.set(\"cnpj\", cnpj);\r",
+									" \r",
+									" \r",
+									"//Criar nome do responsável da empresa (responsibleContact)\r",
+									" \r",
+									"function generateResponsibleContact() {\r",
+									"    const firstNames = [\r",
+									"        \"Ana\", \"Beatriz\", \"Carlos\", \"Daniel\", \"Eduardo\",\r",
+									"        \"Fernanda\", \"Gabriel\", \"Helena\", \"Isabela\", \"João\",\r",
+									"        \"Karina\", \"Lucas\", \"Mariana\", \"Nícolas\", \"Olívia\",\r",
+									"        \"Paulo\", \"Rafael\", \"Sofia\", \"Tiago\", \"Vitória\"\r",
+									"    ];\r",
+									" \r",
+									"    const lastNames = [\r",
+									"        \"Silva\", \"Santos\", \"Oliveira\", \"Souza\", \"Rodrigues\",\r",
+									"        \"Ferreira\", \"Almeida\", \"Costa\", \"Gomes\", \"Martins\",\r",
+									"        \"Araújo\", \"Pereira\", \"Ribeiro\", \"Carvalho\", \"Mendes\",\r",
+									"        \"Barbosa\", \"Lima\", \"Correia\", \"Dias\", \"Rocha\"\r",
+									"    ];\r",
+									" \r",
+									"    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									" \r",
+									"    return `${firstName} ${lastName}`;\r",
+									"}\r",
+									" \r",
+									"let responsibleContact = generateResponsibleContact();\r",
+									"pm.environment.set(\"responsibleContact\", responsibleContact);\r",
+									" \r",
+									" \r",
+									"//Criar a Descrição do tipo de serviços\r",
+									"function generateServiceDescription() {\r",
+									"    const services = [\r",
+									"        \"Telecomunicações\", \"Cafeteria\", \"Imagem e Som\", \"Consultoria Financeira\",\r",
+									"        \"Desenvolvimento de Software\", \"Marketing Digital\", \"E-commerce\",\r",
+									"        \"Gestão de Recursos Humanos\", \"Logística e Transportes\", \"Saúde e Bem-Estar\",\r",
+									"        \"Educação e Treinamento\", \"Arquitetura e Design de Interiores\",\r",
+									"        \"Serviços Jurídicos\", \"Turismo e Hospedagem\", \"Gastronomia e Restaurantes\",\r",
+									"        \"Construção Civil\", \"Agricultura e Pecuária\", \"Varejo e Atendimento ao Consumidor\",\r",
+									"        \"Artes e Entretenimento\", \"Manutenção e Serviços Gerais\"\r",
+									"    ];\r",
+									" \r",
+									"    const serviceDescription = services[Math.floor(Math.random() * services.length)];\r",
+									"    return serviceDescription;\r",
+									"}\r",
+									" \r",
+									"let serviceDescription = generateServiceDescription();\r",
+									"pm.environment.set(\"serviceDescription\", serviceDescription);\r",
+									" \r",
+									"//Criar telefone\r",
+									"function generateTelephone() {\r",
+									"    let telephone = '';\r",
+									" \r",
+									"    for (let i = 0; i < 14; i++) {\r",
+									"        telephone += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+									"    }\r",
+									" \r",
+									"    return telephone;\r",
+									"}\r",
+									" \r",
+									"let telephone = generateTelephone();\r",
+									"pm.environment.set(\"telephone\", telephone);\r",
+									" \r",
+									"//Criar cep\r",
+									"function generateZipCode() {\r",
+									"    let zipCode = '';\r",
+									" \r",
+									"    for (let i = 0; i < 8; i++) {\r",
+									"        zipCode += Math.floor(Math.random() * 10).toString(); // Gera um dígito aleatório de 0 a 9\r",
+									"    }\r",
+									" \r",
+									"    return zipCode;\r",
+									"}\r",
+									" \r",
+									"let zipCode = generateZipCode();\r",
+									"pm.environment.set(\"zipCode\", zipCode);\r",
+									" \r",
+									"//Criar Cidade e Estado, Bairro e Rua\r",
+									"function generateLocationData() {\r",
+									"    const locationData = {\r",
+									"        \"SP\": {\r",
+									"            \"São Paulo\": {\r",
+									"                \"districts\": [\"Vila Mariana\", \"Pinheiros\", \"Moema\", \"Tatuapé\", \"Santana\"],\r",
+									"                \"streets\": [\"Rua Augusta\", \"Av. Paulista\", \"Rua da Consolação\", \"Av. Brigadeiro Faria Lima\", \"Rua Haddock Lobo\"]\r",
+									"            },\r",
+									"            \"Campinas\": {\r",
+									"                \"districts\": [\"Cambuí\", \"Taquaral\", \"Barão Geraldo\", \"Nova Campinas\", \"Sousas\"],\r",
+									"                \"streets\": [\"Rua José Paulino\", \"Av Aquidaban\", \"Rua Barreto Leme\", \"Av Orozimbo Maia\", \"Rua Dr Moraes Sales\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"RJ\": {\r",
+									"            \"Rio de Janeiro\": {\r",
+									"                \"districts\": [\"Copacabana\", \"Leblon\", \"Ipanema\", \"Botafogo\", \"Flamengo\"],\r",
+									"                \"streets\": [\"Av Atlântica\", \"Rua Visconde de Pirajá\", \"Av Nossa Sra. de Copacabana\", \"Rua Barata Ribeiro\", \"Rua Farme de Amoedo\"]\r",
+									"            },\r",
+									"            \"Niterói\": {\r",
+									"                \"districts\": [\"Icaraí\", \"São Francisco\", \"Charitas\", \"Santa Rosa\", \"Itaipu\"],\r",
+									"                \"streets\": [\"Rua Gavião Peixoto\", \"Av Quintino Bocaiúva\", \"Rua Mem de Sá\", \"Rua Mariz e Barros\", \"Rua Lopes Trovão\"]\r",
+									"            },\r",
+									"        },\r",
+									"     \"MG\": {\r",
+									"            \"Belo Horizonte\": {\r",
+									"                \"districts\": [\"Pampulha\", \"Savassi\", \"Lourdes\", \"Venda Nova\", \"Barreiro\"],\r",
+									"                \"streets\": [\"Av Afonso Pena\", \"Rua da Bahia\", \"Av Amazonas\", \"Rua Guaicuí\", \"Av do Contorno\"]\r",
+									"            },\r",
+									"            \"Uberlândia\": {\r",
+									"                \"districts\": [\"Santa Mônica\", \"Fundinho\", \"Cidade Jardim\", \"Brasil\", \"Umuarama\"],\r",
+									"                \"streets\": [\"Av Rondon Pacheco\", \"Av João Naves de Ávila\", \"Rua Olegário Maciel\", \"Av Floriano Peixoto\", \"Rua Duque de Caxias\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"BA\": {\r",
+									"            \"Salvador\": {\r",
+									"                \"districts\": [\"Barra\", \"Pituba\", \"Itapuã\", \"Brotas\", \"Caminho das Árvores\"],\r",
+									"                \"streets\": [\"Av Sete de Setembro\", \"Av ACM\", \"Av Paralela\", \"Rua das Hortênsias\", \"Rua Marquês de Caravelas\"]\r",
+									"            },\r",
+									"            \"Feira de Santana\": {\r",
+									"                \"districts\": [\"Centro\", \"Santa Mônica\", \"Capuchinhos\", \"Cidade Nova\", \"Kalilândia\"],\r",
+									"                \"streets\": [\"Rua JJ Seabra\", \"Av Getúlio Vargas\", \"Rua Marechal Deodoro\", \"Rua Carlos Valadares\", \"Rua Barão de Cotegipe\"]\r",
+									"            },\r",
+									"        },\r",
+									"        \"PR\": {\r",
+									"            \"Curitiba\": {\r",
+									"                \"districts\": [\"Batel\", \"Centro\", \"Alto da XV\", \"Água Verde\", \"Boa Vista\"],\r",
+									"                \"streets\": [\"Av do Batel\", \"Rua XV de Novembro\", \"Rua Mateus Leme\", \"Av Iguaçu\", \"Rua Holanda\"]\r",
+									"            },\r",
+									"            \"Londrina\": {\r",
+									"                \"districts\": [\"Centro\", \"Gleba Palhano\", \"Jardim Higienópolis\", \"Terra Bonita\", \"Jardim Shangri-La\"],\r",
+									"                \"streets\": [\"Av Higienópolis\", \"Rua Paranaguá\", \"Av Maringá\", \"Rua Sergipe\", \"Av Tiradentes\"]\r",
+									"            },\r",
+									"        }\r",
+									"    };\r",
+									" \r",
+									"    // Escolhe um estado aleatoriamente\r",
+									"    const states = Object.keys(locationData);\r",
+									"    const randomState = states[Math.floor(Math.random() * states.length)];\r",
+									" \r",
+									"    // Escolhe uma cidade aleatoriamente dentro do estado selecionado\r",
+									"    const cities = Object.keys(locationData[randomState]);\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									" \r",
+									"    // Escolhe um bairro e uma rua aleatoriamente dentro da cidade selecionada\r",
+									"    const randomDistrict = locationData[randomState][randomCity].districts[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].districts.length)\r",
+									"    ];\r",
+									"    const randomStreet = locationData[randomState][randomCity].streets[\r",
+									"        Math.floor(Math.random() * locationData[randomState][randomCity].streets.length)\r",
+									"    ];\r",
+									" \r",
+									"    return { state: randomState, city: randomCity, district: randomDistrict, street: randomStreet };\r",
+									"}\r",
+									" \r",
+									"let { state, city, district, street } = generateLocationData();\r",
+									"pm.environment.set(\"state\", state);\r",
+									"pm.environment.set(\"city\", city);\r",
+									"pm.environment.set(\"district\", district);\r",
+									"pm.environment.set(\"street\", street);\r",
+									" \r",
+									"//Gerar número aleatório\r",
+									"function generateRandomNumber() {\r",
+									"    const maxNumber = 9999999999; // Número máximo com 10 dígitos\r",
+									"    return Math.floor(Math.random() * (maxNumber + 1)).toString(); // Gera um número aleatório entre 0 e 9999999999\r",
+									"}\r",
+									" \r",
+									"let number = generateRandomNumber();\r",
+									"pm.environment.set(\"number\", number);\r",
+									" \r",
+									"//Criar um complemento aleatório\r",
+									"function generateAddressComplement() {\r",
+									"    const complementTypes = [\"Apartamento\", \"Bloco\", \"Sala\", \"Lote\", \"Andar\"];\r",
+									"    const complement = complementTypes[Math.floor(Math.random() * complementTypes.length)];\r",
+									" \r",
+									"    let complementNumber;\r",
+									"    if (complement === \"Bloco\") {\r",
+									"        // Para \"Bloco\", usar letras\r",
+									"        const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+									"        complementNumber = letters.charAt(Math.floor(Math.random() * letters.length));\r",
+									"    } else {\r",
+									"        // Para os outros tipos, usar números\r",
+									"        complementNumber = Math.floor(Math.random() * 100).toString();\r",
+									"    }\r",
+									" \r",
+									"    return `${complement} ${complementNumber}`;\r",
+									"}\r",
+									" \r",
+									"let complement = generateAddressComplement();\r",
+									"pm.environment.set(\"complement\", complement);\r",
+									" \r",
+									"\r",
+									"\r",
+									" "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"corporateName\": \"{{corporateName}}\",\r\n  \"registerCompany\": \"{{cnpj}}\",\r\n  \"mail\": \"{{email}}\",\r\n  \"matriz\": \"{{matriz}}\",\r\n  \"responsibleContact\": \"{{responsibleContact}}\",\r\n  \"telephone\": \"{{telephone}}\",\r\n  \"serviceDescription\": \"{{serviceDescription}}\",\r\n  \"address\": [\r\n    {\r\n      \"zipCode\": \"{{zipCode}}\",\r\n      \"city\": \"{{city}}\",\r\n      \"state\": \"{{state}}\",\r\n      \"district\": \"{{district}}\",\r\n      \"street\": \"{{street}}\",\r\n      \"number\": \"{{number}}\",\r\n      \"complement\": \"{{complement}}\",\r\n      \"country\": \"Brasil\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/company/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"company",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

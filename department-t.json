@@ -1,0 +1,623 @@
+{
+	"info": {
+		"_postman_id": "d09ce214-fa68-483c-ab10-21e804d8eae8",
+		"name": "05 - Department",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30861529"
+	},
+	"item": [
+		{
+			"name": "Config - Admin",
+			"item": [
+				{
+					"name": "Login - admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Como o Token expira a cada 24 horas, fazendo isso ela é gerado automaticamente a cada requisição mesmo após o prazo. \"Token\" é o nome dado a variavel. E depois é onde o valor do token será salvo.\r",
+									"pm.globals.set(\"Token\", JSON.parse(responseBody).token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{MailAdmin}}\",\r\n    \"password\": \"{{PasswordAdmin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "Include Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									" \r",
+									" pm.test(\"Verifica se 'boardCode' está presente no corpo da resposta\", function () {\r",
+									"    var responseBody = pm.response.text();\r",
+									"    pm.expect(responseBody).to.include('\"boardCode\"');\r",
+									"});\r",
+									"\r",
+									" \r",
+									"pm.environment.set(\"boardId\",pm.variables.replaceIn(JSON.parse(responseBody).newBoard._id));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateBoardName() {\r",
+									"    // Array ampliado com nomes criativos de diretorias\r",
+									"    var directorateNames = [\r",
+									"    \"Board of Directors\", \"Executive Board\", \"Advisory Board\", \"Management Team\", \"Leadership Council\", \r",
+									"    \"Senior Management\", \"Steering Committee\", \"Executive Leadership\", \"Corporate Governance Committee\", \r",
+									"    \"Strategy Board\", \"Executive Committee\", \"Chief Officers\", \"Governing Body\", \"Leadership Team\", \r",
+									"    \"Executive Management\", \"Directors Council\", \"Decision Making Board\", \"Oversight Board\", \r",
+									"    \"Senior Leadership\", \"Directors Panel\", \"Management Committee\", \"Executive Council\", \"Policy Board\", \r",
+									"    \"Executive Panel\", \"Governance Board\", \"C Suite\", \"Top Management\", \"Executive Leadership Team\", \r",
+									"    \"Directors Group\", \"Steering Group\", \"Corporate Officers\", \"Governance Committee\", \"Management Board\", \r",
+									"    \"Executive Team\", \"Chief Officers Group\", \"Leadership Board\", \"Strategy Committee\", \"Advisory Council\", \r",
+									"    \"Corporate Leadership\", \"Senior Officers\", \"Leadership Panel\", \"Executive Directors\", \"Board Committee\", \r",
+									"    \"Governance Panel\", \"Policy Committee\", \"Executive Board of Directors\", \"Senior Executives\"\r",
+									"    ];\r",
+									"\r",
+									"    \r",
+									" \r",
+									"    // Seleciona duas diretorias aleatórias do array\r",
+									"    var randomDirectorate1 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									"    var randomDirectorate2 = directorateNames[Math.floor(Math.random() * directorateNames.length)];\r",
+									" \r",
+									"    // Combina as diretorias com o caractere especial '&', sem espaços\r",
+									"    var boardName = randomDirectorate1 + \"&\" + randomDirectorate2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (boardName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        boardName = boardName.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return boardName;\r",
+									"}\r",
+									" \r",
+									"// Gera um nome para a variável boardName e define como uma variável de ambiente\r",
+									"var boardName = generateBoardName();\r",
+									"pm.environment.set(\"boardName\", boardName); // Define a variável no ambiente"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boardName\": \"{{boardName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/board",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"board"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Cost Center",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									" \r",
+									"pm.environment.set(\"costCenterId\",pm.variables.replaceIn(JSON.parse(responseBody).newCostCenter._id));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateCostCenterName() {\r",
+									"    // Array com nomes representativos de centros de custos\r",
+									"    var costCenterNames = [\r",
+									"    \"Desenvolvimento de Produto\", \"Comunicação\", \"Gestão de Projetos\",\r",
+									"    \"Desenvolvimento de Mercado\", \"Suporte Técnico\", \"Planejamento Estratégico\",\r",
+									"    \"Gestão de Recursos Humanos\", \"Desenvolvimento de Negócios\",\r",
+									"    \"Gestão de Qualidade\", \"Engenharia\", \"Análise de Dados\", \"Gestão de Riscos\",\r",
+									"    \"Desenvolvimento Organizacional\", \"Assessoria Jurídica\", \"Contabilidade\",\r",
+									"    \"Assistência ao Cliente\", \"Gestão de Vendas\", \"Gestão Financeira\",\r",
+									"    \"Desenvolvimento de Sistemas\", \"Recrutamento\", \"Treinamento Corporativo\",\r",
+									"    \"Desenvolvimento Sustentável\", \"Gestão de Procedimentos\", \"Relações Públicas\",\r",
+									"    \"Desenvolvimento de Estratégias\", \"Controle de Qualidade\", \"Gestão de Ativos\",\r",
+									"    \"Gestão de Fornecedores\", \"Segurança do Trabalho\", \"Gestão de Contratos\",\r",
+									"    \"Desenvolvimento de Software\", \"Gestão de Marketing\", \"Planejamento de Produção\",\r",
+									"    \"Gestão de Projetos de TI\", \"Desenvolvimento de Habilidades\", \"Assuntos Regulatórios\",\r",
+									"    \"Gestão de Inventário\", \"Análise Financeira\", \"Gestão de Compras\",\r",
+									"    \"Desenvolvimento de Carreiras\", \"Gestão de Operações\", \"Gestão de Pessoas\",\r",
+									"    \"Desenvolvimento de Clientes\", \"Gestão de Processos\", \"Gestão de Serviços\",\r",
+									"    \"Desenvolvimento de Novos Produtos\", \"Gestão de Relacionamento\",\r",
+									"    \"Desenvolvimento de Talentos\", \"Gestão de Logística\", \"Gestão de Sustentabilidade\",\r",
+									"    \"Desenvolvimento de Mercado Global\", \"Gestão de Infraestrutura\",\r",
+									"    \"Gestão de Sistemas de Informação\", \"Desenvolvimento de Parcerias\",\r",
+									"    \"Gestão de Comunicação\", \"Gestão de Orçamento\", \"Desenvolvimento de Mercado Local\",\r",
+									"    \"Gestão de Instalações\", \"Desenvolvimento de Tecnologia\", \"Gestão de Varejo\",\r",
+									"    \"Desenvolvimento de Fornecedores\", \"Gestão de Relatórios\",\r",
+									"    \"Desenvolvimento de Estratégias de Marketing\", \"Gestão de Desempenho\",\r",
+									"    \"Desenvolvimento de Estratégias de Vendas\", \"Gestão de Inovação\",\r",
+									"    \"Desenvolvimento de Políticas\", \"Gestão de Serviço ao Cliente\",\r",
+									"    \"Desenvolvimento de Processos\", \"Gestão de Armazenamento\",\r",
+									"    \"Desenvolvimento de Software de Gestão\", \"Gestão de Atendimento ao Cliente\",\r",
+									"    \"Desenvolvimento de Aplicativos\", \"Gestão de Dados\",\r",
+									"    \"Desenvolvimento de Sistemas de Gestão\", \"Gestão de Relacionamento com o Cliente\"\r",
+									"    ];\r",
+									" \r",
+									"    // Seleciona dois centros de custos aleatórios do array\r",
+									"    var randomCostCenter1 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									"    var randomCostCenter2 = costCenterNames[Math.floor(Math.random() * costCenterNames.length)];\r",
+									" \r",
+									"    // Combina os centros de custos com o caractere especial '&', sem espaços\r",
+									"    var costCenterName = randomCostCenter1 + \"&\" + randomCostCenter2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (costCenterName.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        costCenterName = costCenterName.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return costCenterName;\r",
+									"}\r",
+									" \r",
+									"// Gera um nome para a variável costCenterName e define como uma variável de ambiente\r",
+									"var costCenterName = generateCostCenterName();\r",
+									"pm.environment.set(\"costCenterName\", costCenterName); // Define a variável no ambiente\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{boardId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/costCenter/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Department",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Pre-request Script in Postman\r",
+									" \r",
+									"function generateDepartmentName() {\r",
+									"    // Array com nomes representativos de departamentos\r",
+									"   var departmentNames = [\r",
+									"    \"TI\", \"RH\", \"Vendas\", \"Compras\", \"Logística\", \"Financeiro\", \"Design\", \"Jurídico\",\r",
+									"    \"Qualidade\", \"Marketing\", \"Produção\", \"Engenharia\", \"Contabilidade\", \"Suporte\",\r",
+									"    \"Pesquisa\", \"Operações\", \"Segurança\", \"Treinamento\", \"Inovação\", \"Assistência\",\r",
+									"    \"Atendimento\", \"Comunicação\", \"Gestão\", \"Desenvolvimento\", \"Estratégia\", \"Assessoria\",\r",
+									"    \"Controladoria\", \"Mercado\", \"Tecnologia\", \"Aquisições\", \"Regulatório\",\r",
+									"    \"Admin\", \"Log\", \"Finanças\", \"Com\", \"Qual\", \"Mkt\", \"Prod\", \"Eng\", \"Cont\", \"Sup\",\r",
+									"    \"Pesq\", \"Inov\", \"Assist\", \"Comun\", \"Gest\", \"Estrat\", \"Desenv\", \"Tec\", \"Aq\",\r",
+									"    \"Oper\", \"Seg\", \"Trein\", \"AssistTéc\", \"Planej\", \"Juríd\", \"MktDigi\", \"RecHuman\",\r",
+									"    \"Qualid\", \"Inov\", \"Prod\", \"Contab\", \"Desenvolv\", \"Engenh\", \"SupTéc\", \"VendasOn\"\r",
+									"];\r",
+									"\r",
+									"\r",
+									" \r",
+									"    // Seleciona dois departamentos aleatórios do array\r",
+									"    var randomDepartment1 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									"    var randomDepartment2 = departmentNames[Math.floor(Math.random() * departmentNames.length)];\r",
+									" \r",
+									"    // Combina os nomes dos departamentos com o caractere especial '&', sem espaços\r",
+									"    var nameDepartment = randomDepartment1 + \"&\" + randomDepartment2;\r",
+									" \r",
+									"    // Checa se o tamanho do nome ultrapassa 50 caracteres\r",
+									"    if (nameDepartment.length > 50) {\r",
+									"        // Se ultrapassar, corta o nome para 50 caracteres\r",
+									"        nameDepartment = nameDepartment.substring(0, 50);\r",
+									"    }\r",
+									" \r",
+									"    return nameDepartment;\r",
+									"}\r",
+									" \r",
+									"// Gera um nome para a variável nameDepartment e define como uma variável de ambiente\r",
+									"var nameDepartment = generateDepartmentName();\r",
+									"pm.environment.set(\"nameDepartment\", nameDepartment); // Define a variável no ambiente"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									" \r",
+									"// Verifica se a resposta contém a mensagem de sucesso esperada\r",
+									"pm.test(\"Verificar mensagem de sucesso\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.msg).to.eql(\"Cadastro realizado com sucesso.\");\r",
+									"});\r",
+									" \r",
+									"pm.environment.set(\"departmentId\",pm.variables.replaceIn(JSON.parse(responseBody).newDepartment._id));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{nameDepartment}}\",\r\n  \"costCenterId\": \"{{costCenterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search Department - Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/department/{{departmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"{{departmentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "List",
+			"item": [
+				{
+					"name": "List Department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Department Count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{Token}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/count",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

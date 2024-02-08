@@ -231,12 +231,6 @@
 			"enabled": true
 		},
 		{
-			"key": "Token",
-			"value": "",
-			"type": "any",
-			"enabled": true
-		},
-		{
 			"key": "streetwithnumbers",
 			"value": "",
 			"type": "any",
@@ -409,9 +403,15 @@
 			"value": "",
 			"type": "any",
 			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2024-02-08T12:26:07.173Z",
+	"_postman_exported_at": "2024-02-08T17:52:40.200Z",
 	"_postman_exported_using": "Postman/10.22.13"
 }

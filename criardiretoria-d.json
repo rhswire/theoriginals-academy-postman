@@ -15,12 +15,13 @@
 					"script": {
 						"exec": [
 							"function generateBoardName() {\r",
-							"    // Array ampliado com nomes criativos de diretorias\r",
+							"    // Nomes criativos para diretorias\r",
 							"    var directorateNames = [\r",
-							"        \"Inovação\", \"Estratégia\", \"Tecnologia\", \"Desenvolvimento\", \"Operações\",\r",
-							"        \"Marketing\", \"Finanças\", \"RecursosHumanos\", \"Comercial\", \"Produção\",\r",
-							"        \"Logística\", \"Qualidade\", \"Pesquisa\", \"Design\", \"Sustentabilidade\",\r",
-							"        \"Educação\", \"Comunicação\", \"Jurídico\", \"Internacional\", \"Digital\"\r",
+							"        \"Transformação\", \"Inovação\", \"Estratégia\", \"Crescimento\", \"Eficiência\",\r",
+							"        \"Operações\", \"Marketing\", \"Finanças\", \"RecursosHumanos\", \"Comercial\",\r",
+							"        \"Produção\", \"Logística\", \"Qualidade\", \"Pesquisa\", \"Design\",\r",
+							"        \"Sustentabilidade\", \"Educação\", \"Comunicação\", \"Jurídico\", \"Internacional\",\r",
+							"        \"Digital\", \"Clientes\", \"Parcerias\", \"Desenvolvimento Pessoal\", \"Engenharia\"\r",
 							"    ];\r",
 							"\r",
 							"    // Seleciona duas diretorias aleatórias do array\r",
@@ -41,7 +42,8 @@
 							"\r",
 							"// Gera um nome para a variável boardName e define como uma variável de ambiente\r",
 							"var boardName = generateBoardName();\r",
-							"pm.environment.set(\"boardName\", boardName); // Define a variável no ambiente"
+							"pm.environment.set(\"boardName\", boardName); // Define a variável no ambiente\r",
+							""
 						],
 						"type": "text/javascript"
 					}
